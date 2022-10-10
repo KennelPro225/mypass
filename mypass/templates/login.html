@@ -1,0 +1,55 @@
+{% extends 'layout.html' %} {% block content %}
+<div class="form">
+  <form method="post" class="connexion">
+    {{ form.hidden_tag() }}
+    <div class="title-form">
+      <h1>Connexion</h1>
+    </div>
+    <div class="form">
+      <div class="form-items">
+        <div class="email-info">
+          <div>{{form.email.label(class='email-label')}}</div>
+          {% if form.email.errors %} {{ form.email (class='password-input')}}
+          <div class="invalid-feedback">
+            {% for error in form.email.errors %}
+            <span>{{error}}</span>
+            {% endfor %}
+          </div>
+          {% else %}
+          <div>{{form.email(class='email-input')}}</div>
+          {% endif %}
+        </div>
+        <div class="password-info">
+          <div>{{form.password.label(class='password-label')}}</div>
+          {% if form.password.errors %} {{ form.password(class='password-input') }}
+          <div class="invalid-feedback">
+            {% for error in form.password.errors %}
+            <span>{{error}}</span>
+            {% endfor %}
+          </div>
+          {% else %}
+          <div>{{form.password(class='password-input')}}</div>
+          {% endif %}
+        </div>
+        <div class="remember">
+          <div>{{form.remember(class='remember-input')}}</div>
+          <div>{{form.remember.label(class='remember-label')}}</div>
+        </div>
+        <div class="bouton-submit">{{form.submit(id='submit')}}</div>
+        <div>
+          <div class="forget">
+            <small><a href="#">Mot de passe oublié?</a></small>
+          </div>
+          <div class="account">
+            <small
+              >Vous n'avez pas de compte?
+              <a href="{{url_for('signUp')}}">Inscrivez-vous</a></small
+            >
+          </div>
+        </div>
+      </div>
+    </div>
+  </form>
+</div>
+
+{% endblock content %}

@@ -1,0 +1,658 @@
+@font-face {
+  font-family: railway;
+  src: url(fonts/Railway.otf);
+}
+
+@font-face {
+  font-family: montserrat;
+  src: url(fonts/Montserrat/Montserrat-VariableFont_wght.ttf);
+}
+
+.section-content {
+  background-color: #0c1821;
+  min-height: 100vh;
+  min-width: 100%;
+}
+.flash-message{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 10px;
+}
+.danger,.invalid-feedback{
+  color: rgb(196, 18, 18);
+  font-size: 0.9rem;
+}
+.success{
+  color: rgb(5, 190, 5);
+}
+
+@media screen and (min-width: 1024px) {
+  .logo {
+    width: 80%;
+  }
+  .section-first {
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+    padding: 45px;
+  }
+  .text {
+    color: #b3001b;
+    font-size: 2.8rem;
+  }
+  .text1 {
+    color: #ffe9f3;
+    font-size: 2rem;
+  }
+  .navBar {
+    background-color: #ffe9f3;
+  }
+
+  .text-info {
+    font-family: railway;
+    width: 380px;
+  }
+  .font {
+    font-family: railway;
+  }
+  .section-two {
+    display: flex;
+    justify-content: space-evenly;
+    padding: 45px;
+  }
+  .first-card {
+    width: 31.8vw;
+    text-align: center;
+    background-color: #ffe9f3;
+    height: 40vh;
+    border-radius: 0.5rem;
+    font-family: railway;
+    padding: 8px;
+  }
+  .first-card h3 {
+    font-size: 1.4rem;
+  }
+  .first-card p {
+    font-size: 1rem;
+    padding: 15px 40px;
+  }
+  .bouton-user {
+    background-color: #0c1821;
+    color: #ffe9f3;
+    padding: 10px 40px;
+    border-radius: 0.7rem;
+    box-shadow: 1px 5px 5px #0c1821;
+    margin: 50px 0;
+  }
+  .bouton-user1 {
+    background-color: #0c1821;
+    color: #ffe9f3;
+    padding: 10px 40px;
+    border-radius: 0.7rem;
+    box-shadow: 1px 5px 5px #0c1821;
+    margin: 27px 0;
+  }
+  .section-third {
+    padding: 75px;
+  }
+  .text-category {
+    color: #ffe9f3;
+    font-size: 2rem;
+    font-family: railway;
+  }
+  .categories {
+    display: flex;
+    justify-content: space-evenly;
+    flex-wrap: wrap;
+    margin-top: 45px;
+  }
+  .category-card {
+    width: 16vw;
+    padding: 2px 5px;
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+    border: 1px solid black;
+    margin: 8px;
+    border-radius: 0.6rem;
+    background-color: #ffe9f3;
+    font-family: railway;
+    border: none;
+    transition: 0.3s;
+  }
+  .category-card:hover {
+    scale: 1.1;
+  }
+  .category-icon {
+    width: 60px;
+  }
+  .form {
+    padding: 65px 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .connexion {
+    background-color: #ffe9f3;
+    min-width: 40vw;
+    min-height: 3vh;
+    border-radius: 0.7rem;
+  }
+  .title-form {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 40px;
+    color: #0c1821;
+    font-size: 1.6rem;
+    font-family: railway;
+    font-weight: bold;
+    letter-spacing: 2px;
+  }
+
+  .email-input,
+  .password-input,
+  .firstName-input,
+  .lastName-input,
+  .cpassword-input {
+    min-width: 360px;
+    min-height: 40px;
+    background-color: #d9d9d9;
+    border-radius: 0.6rem;
+  }
+  .form {
+    display: flex;
+    justify-content: center;
+  }
+  label {
+    color: #0c1821;
+    font-family: railway;
+    font-weight: 100;
+    margin-left: 8px;
+  }
+  .remember {
+    display: flex;
+    margin: 4px 0;
+  }
+  .email-info {
+    margin: 4px 0;
+  }
+  #submit {
+    background-color: #b3001b;
+    width: 180px;
+    height: 45px;
+    color: #ffe9f3;
+    border-radius: 0.7rem;
+    font-family: railway;
+    transition: 0.3s;
+    cursor: pointer;
+  }
+  #sumit {
+    background-color: #b3001b;
+    width: 180px;
+    height: 45px;
+    color: #ffe9f3;
+    border-radius: 0.7rem;
+    font-family: railway;
+    transition: 0.3s;
+    cursor: pointer;
+  }
+  .bouton-submit {
+    display: flex;
+    justify-content: center;
+    margin: 8px 0;
+  }
+  .forget {
+    display: flex;
+    justify-content: flex-end;
+    font-family: railway;
+    margin: 3px 0;
+  }
+  .account {
+    display: flex;
+    justify-content: center;
+    margin: 10px 0;
+    font-family: railway;
+    font-size: 1rem;
+  }
+  .account a {
+    text-decoration: underline;
+  }
+
+  .inscription {
+    background-color: #ffe9f3;
+    min-width: 38vw;
+    min-height: 80vh;
+    border-radius: 0.6rem;
+  }
+}
+
+/* 
+*********************************TABLETTE************************************** */
+
+@media screen and (max-width: 1023px) and (min-width: 800px) {
+  .logo {
+    width: 70%;
+  }
+  #menu {
+    font-size: 1rem;
+  }
+  .text {
+    color: #b3001b;
+    font-size: 2.3rem;
+  }
+  .text1 {
+    color: #ffe9f3;
+    font-size: 1.5rem;
+  }
+  .navBar {
+    background-color: #ffe9f3;
+  }
+
+  .font {
+    font-family: railway;
+  }
+  .text-info {
+    font-family: railway;
+    width: 280px;
+  }
+  .section-first {
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+    padding: 45px;
+  }
+  .illustration {
+    width: 300px;
+  }
+  .section-two {
+    display: flex;
+    justify-content: space-evenly;
+    padding: 45px;
+  }
+  .first-card {
+    width: 35vw;
+    text-align: center;
+    background-color: #ffe9f3;
+    height: 35vh;
+    border-radius: 0.5rem;
+    font-family: railway;
+    padding: 8px;
+  }
+  .first-card h3 {
+    font-size: 1.2rem;
+  }
+  .first-card p {
+    font-size: 0.9rem;
+    padding: 15px 40px;
+  }
+  .bouton-user {
+    background-color: #0c1821;
+    color: #ffe9f3;
+    padding: 10px 40px;
+    border-radius: 0.7rem;
+    box-shadow: 1px 5px 5px #0c1821;
+    margin: 27px 0;
+  }
+  .bouton-user1 {
+    background-color: #0c1821;
+    color: #ffe9f3;
+    padding: 10px 40px;
+    border-radius: 0.7rem;
+    box-shadow: 1px 5px 5px #0c1821;
+    margin: 27px 0;
+  }
+  .section-third {
+    padding: 75px;
+  }
+  .text-category {
+    color: #ffe9f3;
+    font-size: 2rem;
+    font-family: railway;
+  }
+  .categories {
+    display: flex;
+    justify-content: space-evenly;
+    flex-wrap: wrap;
+    margin-top: 45px;
+  }
+  .category-card {
+    width: 18vw;
+    padding: 2px 5px;
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+    border: 1px solid black;
+    margin: 8px;
+    border-radius: 0.6rem;
+    background-color: #ffe9f3;
+    font-family: railway;
+    border: none;
+    font-size: 0.9rem;
+    transition: 0.3s;
+  }
+  .category-card:hover {
+    scale: 1.1;
+  }
+  .category-icon {
+    width: 45px;
+  }
+  .form {
+    padding: 65px 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .connexion {
+    background-color: #ffe9f3;
+    min-width: 42vw;
+    min-height: 4vh;
+    border-radius: 0.7rem;
+  }
+  .title-form {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 40px;
+    color: #0c1821;
+    font-size: 1.6rem;
+    font-family: railway;
+    font-weight: bold;
+    letter-spacing: 2px;
+  }
+
+  .email-input,
+  .password-input,
+  .firstName-input,
+  .lastName-input,
+  .cpassword-input {
+    min-width: 300px;
+    min-height: 40px;
+    background-color: #d9d9d9;
+    border-radius: 0.6rem;
+  }
+  .form {
+    display: flex;
+    justify-content: center;
+  }
+  label {
+    color: #0c1821;
+    font-family: railway;
+    font-weight: 100;
+    margin-left: 8px;
+  }
+  .remember {
+    display: flex;
+    margin: 4px 0;
+  }
+  .email-info {
+    margin: 4px 0;
+  }
+  #submit {
+    background-color: #b3001b;
+    width: 180px;
+    height: 45px;
+    color: #ffe9f3;
+    border-radius: 0.7rem;
+    font-family: railway;
+    transition: 0.3s;
+    cursor: pointer;
+  }
+  #sumit {
+    background-color: #b3001b;
+    width: 180px;
+    height: 45px;
+    color: #ffe9f3;
+    border-radius: 0.7rem;
+    font-family: railway;
+    transition: 0.3s;
+    cursor: pointer;
+  }
+  .bouton-submit {
+    display: flex;
+    justify-content: center;
+    margin: 8px 0;
+  }
+  .forget {
+    display: flex;
+    justify-content: flex-end;
+    font-family: railway;
+    margin: 3px 0;
+  }
+  .account {
+    display: flex;
+    justify-content: center;
+    margin: 10px 0;
+    font-family: railway;
+    font-size: 1rem;
+  }
+  .account a {
+    text-decoration: underline;
+  }
+
+  .inscription {
+    background-color: #ffe9f3;
+    min-width: 38vw;
+    min-height: 80vh;
+    border-radius: 0.6rem;
+  }
+}
+
+/* 
+*********************************MOBILE************************************** */
+
+@media screen and (max-width: 799px) {
+  .logo {
+    width: 70%;
+  }
+  #menu {
+    font-size: 0.9rem;
+  }
+  .text {
+    color: #b3001b;
+    font-size: 2rem;
+  }
+  .text1 {
+    color: #ffe9f3;
+    font-size: 1.3rem;
+  }
+  .navBar {
+    background-color: #ffe9f3;
+  }
+
+  .font {
+    font-family: railway;
+  }
+  .text-info {
+    display: flex;
+    justify-content: center;
+    font-family: railway;
+    width: 80%;
+  }
+  .section-first {
+    align-items: center;
+    padding: 45px;
+  }
+  .illustration {
+    width: 100%;
+  }
+  .section-two {
+    padding: 45px;
+  }
+  .first-card {
+    width: 100%;
+    text-align: center;
+    background-color: #ffe9f3;
+    min-height: 4vh;
+    border-radius: 0.5rem;
+    font-family: railway;
+    /* padding: 8px; */
+    margin-top: 10px;
+  }
+  .first-card h3 {
+    font-size: 1.2rem;
+  }
+  .first-card p {
+    font-size: 0.8rem;
+    padding: 15px 40px;
+  }
+  .bouton-user {
+    background-color: #0c1821;
+    color: #ffe9f3;
+    padding: 10px 40px;
+    border-radius: 0.7rem;
+    box-shadow: 1px 5px 5px #0c1821;
+    margin: 27px 0;
+  }
+  .bouton-user1 {
+    background-color: #0c1821;
+    color: #ffe9f3;
+    padding: 10px 40px;
+    border-radius: 0.7rem;
+    box-shadow: 1px 5px 5px #0c1821;
+    margin: 27px 0;
+  }
+  .section-third {
+    width: 100%;
+    padding: 75px;
+  }
+  .text-category {
+    color: #ffe9f3;
+    font-size: 2rem;
+    font-family: railway;
+  }
+  .categories {
+    display: flex;
+    justify-content: space-evenly;
+    flex-wrap: wrap;
+    margin-top: 45px;
+    width: 100%;
+  }
+  .category-card {
+    width: 70vw;
+    padding: 2px 5px;
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+    border: 1px solid black;
+    margin: 8px;
+    border-radius: 0.6rem;
+    background-color: #ffe9f3;
+    font-family: railway;
+    border: none;
+    font-size: 0.9rem;
+    transition: 0.2s;
+  }
+  .category-card:hover {
+    scale: 1.1;
+  }
+  .category-icon {
+    width: 45px;
+  }
+  .carre {
+    width: 100px;
+  }
+  .form {
+    padding: 65px 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .connexion {
+    background-color: #ffe9f3;
+    min-width: 80vw;
+    min-height: 4vh;
+    border-radius: 0.7rem;
+  }
+  .title-form {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 40px;
+    color: #0c1821;
+    font-size: 1.6rem;
+    font-family: railway;
+    font-weight: bold;
+    letter-spacing: 2px;
+  }
+
+  .email-input,
+  .password-input,
+  .firstName-input,
+  .lastName-input,
+  .cpassword-input {
+    min-width: 270px;
+    min-height: 40px;
+    background-color: #d9d9d9;
+    border-radius: 0.6rem;
+  }
+  .form {
+    display: flex;
+    justify-content: center;
+  }
+  label {
+    color: #0c1821;
+    font-family: railway;
+    font-weight: 100;
+    margin-left: 8px;
+  }
+  .remember {
+    display: flex;
+    margin: 4px 0;
+  }
+  .email-info {
+    margin: 4px 0;
+  }
+  #submit {
+    background-color: #b3001b;
+    width: 180px;
+    height: 45px;
+    color: #ffe9f3;
+    border-radius: 0.7rem;
+    font-family: railway;
+    transition: 0.3s;
+    cursor: pointer;
+  }
+  #sumit {
+    background-color: #b3001b;
+    width: 180px;
+    height: 45px;
+    color: #ffe9f3;
+    border-radius: 0.7rem;
+    font-family: railway;
+    transition: 0.3s;
+    cursor: pointer;
+  }
+  .bouton-submit {
+    display: flex;
+    justify-content: center;
+    margin: 8px 0;
+  }
+  .forget {
+    display: flex;
+    justify-content: flex-end;
+    font-family: railway;
+    margin: 3px 0;
+  }
+  .account {
+    display: flex;
+    justify-content: center;
+    margin: 10px 0;
+    font-family: railway;
+    font-size: 1rem;
+  }
+  .account a {
+    text-decoration: underline;
+  }
+
+  .inscription {
+    background-color: #ffe9f3;
+    min-width: 80vw;
+    min-height: 80vh;
+    border-radius: 0.6rem;
+  }
+}

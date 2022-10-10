@@ -1,0 +1,138 @@
+{% extends 'layout.html' %}
+
+{% block content %}
+
+<div class="section-first">
+    <div class="text-info">
+        <h1 class="text">Pour ceux<p class="text1">qui adorent sortir, EvenTicket est un hub pour tous les
+                évènements
+            <p>
+        </h1>
+
+    </div>
+    <div class="image">
+        <img src="{{url_for('static', filename='./pictures/concert.jpg')}}" alt="concert" class="illustration">
+    </div>
+</div>
+
+<div class="section-two">
+    <div class="first-card">
+        <h3>Vous êtes un client?</h3>
+        <p>Le client c’est l’utilisateur qui est en quête d’évènement (concert, conférence ....)</p>
+        <a href="{{url_for('signUp')}}" class="link">
+            <button class="bouton-user">S'inscrire</button>
+        </a>
+    </div>
+    <div class="first-card">
+        <h3>Vous êtes un promoteur?</h3>
+        <p>Le promoteur est l’utilisateur qui en quête d’une plateforme pour la promotion de son évènement</p>
+        <a href="{{url_for('signUp')}}" class="link">
+            <button class="bouton-user1">S'inscrire</button>
+        </a>
+    </div>
+</div>
+
+<div class="section-third">
+    <div class="category">
+        <h2 class="text-category">Catégories</h2>
+    </div>
+    <div class="categories">
+        <a href="" class="link-category">
+            <div class="category-card">
+                <div class="carre">
+                    <img src="https://img.icons8.com/dotty/160/b3001b/kawaii-soda.png" class="category-icon" />
+                </div>
+                <div class="carre">Gastronomie</div>
+            </div>
+        </a>
+        <a href="" class="link-category">
+            <div class="category-card">
+                <div class="carre">
+                    <img src="https://img.icons8.com/dotty/160/b3001b/trophy.png" class="category-icon" />
+                </div>
+                <div class="carre">
+                    Sport
+                </div>
+            </div>
+        </a>
+        <a href="" class="link-category">
+            <div class="category-card">
+                <div class="carre">
+                    <img src="https://img.icons8.com/dotty/160/b3001b/healthy-food.png" class="category-icon" />
+                </div>
+                <div class="carre">Environnement</div>
+            </div>
+        </a>
+        <a href="" class="link-category">
+            <div class="category-card">
+                <div class="carre">
+
+                    <img src="https://img.icons8.com/dotty/160/b3001b/music.png" class="category-icon" />
+                </div>
+                <div class="carre">
+                    Musique
+                </div>
+            </div>
+        </a>
+        <a href="" class="link-category">
+            <div class="category-card">
+                <div class="carre">
+                    <img src="https://img.icons8.com/dotty/160/b3001b/education.png" class="category-icon" />
+                </div>
+                <div class="carre">
+                    Education
+                </div>
+            </div>
+        </a>
+        <a href="" class="link-category">
+            <div class="category-card">
+                <div class="carre">
+                    <img src="https://img.icons8.com/dotty/160/b3001b/training.png" class="category-icon" />
+                </div>
+                <div class="carre">
+                    Formation
+                </div>
+            </div>
+        </a>
+        <a href="" class="link-category">
+            <div class="category-card">
+                <div class="carre">
+                    <img src="https://img.icons8.com/dotty/160/b3001b/suitcase.png" class="category-icon" />
+                </div>
+                <div class="carre">
+                    Voyages
+                </div>
+            </div>
+        </a>
+        <a href="" class="link-category">
+            <div class="category-card">
+                <div class="carre">
+                    <img src="https://img.icons8.com/dotty/160/b3001b/comedy.png" class="category-icon" />
+                </div>
+                <div class="carre">
+                    Art du spétacle
+                </div>
+            </div>
+            <a href="" class="link-category">
+                <div class="category-card">
+                    <div class="carre">
+                        <img src="https://img.icons8.com/dotty/160/b3001b/meeting-room.png" class="category-icon" />
+                    </div>
+                    <div class="carre">
+                        Affaire
+                    </div>
+                </div>
+            </a>
+            <a href="" class="link-category">
+                <div class="category-card">
+                    <div class="carre">
+                        <img src="https://img.icons8.com/dotty/160/b3001b/game-controller.png" class="category-icon" />
+                    </div>
+                    <div class="carre">
+                        Loisirs
+                    </div>
+                </div>
+            </a>
+    </div>
+</div>
+{% endblock content %}
