@@ -40,7 +40,7 @@ def signUp():
     form = RegistrationForm()
     if form.validate_on_submit():
         hashpassword = bcrypt.generate_password_hash(
-            form.password.data).decode('utf-8')
+            form.password.data,60).decode('utf-8')
         name1 = form.lastName.data
         name = form.firstName.data
         number = range(100000, 1000000000, 345)
