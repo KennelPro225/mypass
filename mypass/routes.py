@@ -17,11 +17,12 @@ def home():
 def login():
     if current_user.is_authenticated:
         return redirect(url_for('home'))
+
     form = LoginForm()
     if form.validate_on_submit():
         user = Users.query.filter_by(email=form.email.data).first()
         if user and bcrypt.check_password_hash(user.password, form.password.data):
-            # login_user(user, remember=form.remember.data)
+            login_user(user, remember=form.remember.data)
             return redirect(url_for('home'))
         else:
             flash(
@@ -40,7 +41,7 @@ def signUp():
     form = RegistrationForm()
     if form.validate_on_submit():
         hashpassword = bcrypt.generate_password_hash(
-            form.password.data,60).decode('utf-8')
+            form.password.data).decode('utf-8')
         name1 = form.lastName.data
         name = form.firstName.data
         number = range(100000, 1000000000, 345)
@@ -82,3 +83,8 @@ def editEvent():
 @login_required
 def deleteEvent():
     return render_template('deleteEvent.html')
+
+
+@app.route('/user/profile')
+def profile():
+    pass

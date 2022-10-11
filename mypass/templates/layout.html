@@ -73,6 +73,21 @@
             <li>
               <a
                 class="font md:p-4 py-2 block text-bold"
+                href="{{url_for('logout')}}"
+                >Se Deconnecter</a
+              >
+            </li>
+            <li>
+              <a
+                class="font md:p-4 py-2 block text-bold"
+                href="{{url_for('profile')}}"
+                >Mon Profile</a
+              >
+            </li>
+            {% else %}
+            <li>
+              <a
+                class="font md:p-4 py-2 block text-bold"
                 href="{{url_for('login')}}"
                 >Se Connecter</a
               >
@@ -82,21 +97,6 @@
                 class="font md:p-4 py-2 block text-bold"
                 href="{{url_for('signUp')}}"
                 >S'inscrire</a
-              >
-            </li>
-            {% else %}
-            <li>
-              <a
-                class="font md:p-4 py-2 block text-bold"
-                href="{{url_for('login')}}"
-                >Se Deconnecter</a
-              >
-            </li>
-            <li>
-              <a
-                class="font md:p-4 py-2 block text-bold"
-                href="{{url_for('signUp')}}"
-                >Mon Profile</a
               >
             </li>
             {% endif %}
