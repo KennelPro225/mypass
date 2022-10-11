@@ -21,7 +21,8 @@
         </div>
         <div class="password-info">
           <div>{{form.password.label(class='password-label')}}</div>
-          {% if form.password.errors %} {{ form.password(class='password-input') }}
+          {% if form.password.errors %} {{ form.password(class='password-input')
+          }}
           <div class="invalid-feedback">
             {% for error in form.password.errors %}
             <span>{{error}}</span>

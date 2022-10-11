@@ -1,5 +1,5 @@
 from flask_wtf import FlaskForm
-from wtforms import StringField, PasswordField, SubmitField, BooleanField
+from wtforms import StringField, PasswordField, SubmitField, BooleanField, TextAreaField, TimeField, DateField, FileField, SelectField, IntegerField
 from wtforms.validators import DataRequired, Email, EqualTo, ValidationError
 
 from mypass.models import Users
@@ -28,3 +28,14 @@ class RegistrationForm(FlaskForm):
         if user:
             raise ValidationError(
                 'Cet Email a déjà un compte. Choisissez en un autre.')
+
+
+class PostForm(FlaskForm):
+    title = StringField("Titre de l'évènement")
+    type = SelectField("Type d'évènement")
+    category = SelectField("Catégories")
+    seat = IntegerField('Nombre de Places')
+    image = FileField('Image Illustrative')
+    place = StringField('Lieu')
+    date = DateField('Date')
+    hour = TimeField('Heure')
