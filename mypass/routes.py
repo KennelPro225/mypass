@@ -97,7 +97,7 @@ def category():
     return render_template('category.html')
 
 
-@app.route('ticket')
+@app.route('/ticket')
 @login_required
 def ticket():
     return render_template('ticket.html')
