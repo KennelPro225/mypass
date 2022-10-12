@@ -1,14 +1,13 @@
 from mypass import app, db, bcrypt
-from mypass.models import Users
+from mypass.models import Users, Type_Event, Category
 from flask import render_template, url_for, flash, redirect, request
-from mypass.forms import LoginForm, RegistrationForm
+from mypass.forms import EditForm, LoginForm, RegistrationForm
 from random import choice
 from flask_login import login_user, current_user, logout_user, login_required
 
 
 @app.route('/')
 @app.route('/home')
-@login_required
 def home():
     return render_template('home.html')
 
@@ -73,10 +72,11 @@ def createEvent():
     return render_template('createEvent.html')
 
 
-@app.route('/edit_event')
+@app.route('/edit_event', methods=['GET', 'POST'])
 @login_required
 def editEvent():
-    return render_template('editEvent.html')
+    form = EditForm()
+    return render_template('editeEvent.html', form=form)
 
 
 @app.route('/delete_event')
@@ -86,5 +86,18 @@ def deleteEvent():
 
 
 @app.route('/user/profile')
+@login_required
 def profile():
-    pass
+    return render_template('profile.html')
+
+
+@app.route('/category/')
+@login_required
+def category():
+    return render_template('category.html')
+
+
+@app.route('ticket')
+@login_required
+def ticket():
+    return render_template('ticket.html')

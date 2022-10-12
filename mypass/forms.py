@@ -2,7 +2,7 @@ from flask_wtf import FlaskForm
 from wtforms import StringField, PasswordField, SubmitField, BooleanField, TextAreaField, TimeField, DateField, FileField, SelectField, IntegerField
 from wtforms.validators import DataRequired, Email, EqualTo, ValidationError
 
-from mypass.models import Users
+from mypass.models import Users, Category, Type_Event
 
 
 class LoginForm(FlaskForm):
@@ -11,6 +11,7 @@ class LoginForm(FlaskForm):
     password = PasswordField('Mot de passe', validators=[DataRequired()])
     remember = BooleanField('Me garder Connecter')
     submit = SubmitField('Se connecter')
+    
 
 
 class RegistrationForm(FlaskForm):
@@ -30,12 +31,33 @@ class RegistrationForm(FlaskForm):
                 'Cet Email a déjà un compte. Choisissez en un autre.')
 
 
+category = Category.query.all()
+choice = []
+for cate in category:
+    choice.append("{}".format(cate.category))
+
+type = Type_Event.query.all()
+choices = []
+for typeE in type:
+    choices.append("{}".format(typeE.name))
+
+
 class PostForm(FlaskForm):
     title = StringField("Titre de l'évènement")
-    type = SelectField("Type d'évènement")
-    category = SelectField("Catégories")
+    type = SelectField("Type d'évènement", choices=choices)
+    # description = TextAreaField("Desription de l'évènement")
+    category = SelectField("Catégories", choices=choice)
     seat = IntegerField('Nombre de Places')
     image = FileField('Image Illustrative')
     place = StringField('Lieu')
     date = DateField('Date')
     hour = TimeField('Heure')
+
+
+class EditForm(FlaskForm):
+    title = StringField("Titre de l'évènement", validators=[DataRequired()])
+    seat = IntegerField('Nombre de Places', validators=[DataRequired()])
+    image = FileField('Image Illustrative')
+    date = DateField('Date', validators=[DataRequired()])
+    hour = TimeField('Heure', validators=[DataRequired()])
+    submit = SubmitField("Add")
