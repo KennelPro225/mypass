@@ -14,7 +14,9 @@
         <img src="{{url_for('static', filename='./pictures/concert.jpg')}}" alt="concert" class="illustration">
     </div>
 </div>
+{% if current_user.is_authenticated %}
 
+{% else %}
 <div class="section-two">
     <div class="first-card">
         <h3>Vous êtes un client?</h3>
@@ -31,7 +33,7 @@
         </a>
     </div>
 </div>
-
+{%endif%}
 <div class="section-third">
     <div class="category">
         <h2 class="text-category">Catégories</h2>

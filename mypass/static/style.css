@@ -13,17 +13,18 @@
   min-height: 100vh;
   min-width: 100%;
 }
-.flash-message{
+.flash-message {
   display: flex;
   justify-content: center;
   align-items: center;
   padding: 10px;
 }
-.danger,.invalid-feedback{
+.danger,
+.invalid-feedback {
   color: rgb(196, 18, 18);
   font-size: 0.9rem;
 }
-.success{
+.success {
   color: rgb(5, 190, 5);
 }
 
@@ -226,6 +227,72 @@
     min-width: 38vw;
     min-height: 80vh;
     border-radius: 0.6rem;
+  }
+  .infoEvent {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin: 5px 0;
+  }
+  .location,.date{
+    margin: 25px 0;
+  }
+  .title-label,
+  .type-label,
+  .date-label,
+  .hour-label,
+  .image-label,
+  .seat-label,
+  .place-label,
+  .category-label {
+    color: #ffe9f3;
+    font-size: 1.2rem;
+  }
+  .title-label::after,
+  .type-label::after,
+  .date-label::after,
+  .hour-label::after,
+  .seat-label::after,
+  .place-label::after,
+  .category-label::after {
+    content: " *";
+    color: #b3001b;
+    font-size: 1rem;
+  }
+  .title-input,
+  .place-input {
+    width: 50vw;
+    height: 45px;
+    border-radius: 0.6rem;
+    outline: none;
+    border: none;
+    background-color: #d9d9d9;
+  }
+  .image-input,
+  .type-input,
+  .category-input,
+  .seat-input,
+  .date-input,
+  .hour-input {
+    background-color: #d9d9d9;
+    height: 45px;
+    width: 22vw;
+    border-radius: 0.6rem;
+    outline: none;
+    border: none;
+  }
+  input {
+    background-color: #d9d9d9;
+  }
+  select {
+    background-color: #d9d9d9;
+  }
+  input:focus {
+    outline: none;
+  }
+  .info-form{
+    display: flex;
+    justify-content: center;
   }
 }
 

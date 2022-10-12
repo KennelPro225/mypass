@@ -1,6 +1,7 @@
 from flask_wtf import FlaskForm
-from wtforms import StringField, PasswordField, SubmitField, BooleanField, TextAreaField, TimeField, DateField, FileField, SelectField, IntegerField
-from wtforms.validators import DataRequired, Email, EqualTo, ValidationError
+from wtforms import StringField, PasswordField, SubmitField, BooleanField, TimeField, DateField, SelectField, IntegerField
+from flask_wtf.file import FileField, FileAllowed
+from wtforms.validators import DataRequired, Email, EqualTo, ValidationError, NumberRange
 
 from mypass.models import Users, Category, Type_Event
 
@@ -11,7 +12,6 @@ class LoginForm(FlaskForm):
     password = PasswordField('Mot de passe', validators=[DataRequired()])
     remember = BooleanField('Me garder Connecter')
     submit = SubmitField('Se connecter')
-    
 
 
 class RegistrationForm(FlaskForm):
@@ -43,21 +43,26 @@ for typeE in type:
 
 
 class PostForm(FlaskForm):
-    title = StringField("Titre de l'évènement")
-    type = SelectField("Type d'évènement", choices=choices)
+    title = StringField("Titre de l'évènement", validators=[DataRequired()])
+    type = SelectField("Type d'évènement", choices=choices,
+                       validators=[DataRequired()])
     # description = TextAreaField("Desription de l'évènement")
-    category = SelectField("Catégories", choices=choice)
-    seat = IntegerField('Nombre de Places')
-    image = FileField('Image Illustrative')
-    place = StringField('Lieu')
-    date = DateField('Date')
-    hour = TimeField('Heure')
+    category = SelectField("Catégories", choices=choice,
+                           validators=[DataRequired()])
+    seat = IntegerField('Nombre de Places', validators=[DataRequired()])
+    image = FileField('Image Illustrative', validators=[DataRequired()])
+    place = StringField('Lieu', validators=[DataRequired()])
+    date = DateField('Date', validators=[DataRequired()])
+    hour = TimeField('Heure', validators=[DataRequired()])
+    submit = SubmitField("Publier")
 
 
 class EditForm(FlaskForm):
     title = StringField("Titre de l'évènement", validators=[DataRequired()])
-    seat = IntegerField('Nombre de Places', validators=[DataRequired()])
-    image = FileField('Image Illustrative')
+    seat = IntegerField('Nombre de Places', validators=[
+                        DataRequired(), NumberRange(min=0, max=1000000)])
+    image = FileField('Image Illustrative', validators=[
+                      FileAllowed(['jpg', 'png', 'jpeg'])])
     date = DateField('Date', validators=[DataRequired()])
     hour = TimeField('Heure', validators=[DataRequired()])
     submit = SubmitField("Add")

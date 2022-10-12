@@ -1,0 +1,127 @@
+{% extends 'layout.html' %} {% block content %}
+<div class="post">
+    <form method="post">
+        {{ form.hidden_tag() }}
+        <div class="info-form">
+            <div class="form-items">
+                <div class="form-items">
+                    <div class="eventInfo">
+                        <div class="title-info">
+                            <div>{{form.title.label(class='title-label')}}</div>
+                            {% if form.title.errors %}
+                            <div>{{form.title(class='title-input')}}</div>
+                            <div class="invalid-feedback">
+                                {% for error in form.title.errors %}
+                                <span>{{error}}</span>
+                                {% endfor %}
+                            </div>
+                            {% else %}
+                            <div>{{form.title(class='title-input')}}</div>
+                            {% endif %}
+                        </div>
+                        <div class="infoEvent">
+                            <div class="type-info">
+                                <div>{{form.type.label(class='type-label')}}</div>
+                                {% if form.type.errors %} {{ form.type}}
+                                <div class="invalid-feedback">
+                                    {% for error in form.type.errors %}
+                                    <span>{{error}}</span>
+                                    {% endfor %}
+                                </div>
+                                {% else %}
+                                <div>{{form.type(class='type-input')}}</div>
+                                {% endif %}
+                            </div>
+                            <div class="category-info">
+                                <div>{{form.category.label(class='category-label')}}</div>
+                                {% if form.category.errors %}
+                                <div>{{form.category(class='category-input')}}</div>
+                                <div class="invalid-feedback">
+                                    {% for error in form.category.errors %}
+                                    <span>{{error}}</span>
+                                    {% endfor %}
+                                </div>
+                                {% else %}
+                                <div>{{form.category(class='category-input')}}</div>
+                                {% endif %}
+                            </div>
+                        </div>
+                        <div class="infoEvent">
+                            <div class="seat-info">
+                                <div>{{form.seat.label(class='seat-label')}}</div>
+                                {% if form.seat.errors %}
+                                <div>{{form.seat(class='seat-input')}}</div>
+                                <div class="invalid-feedback">
+                                    {% for error in form.seat.errors %}
+                                    <span>{{error}}</span>
+                                    {% endfor %}
+                                </div>
+                                {% else %}
+                                <div>{{form.seat(class='seat-input')}}</div>
+                                {% endif %}
+                            </div>
+                            <div class="image-info">
+                                <div>{{form.image.label(class='image-label')}}</div>
+                                {% if form.image.errors %}
+                                <div>{{form.image(class='image-input')}}</div>
+                                <div class="invalid-feedback">
+                                    {% for error in form.image.errors %}
+                                    <span>{{error}}</span>
+                                    {% endfor %}
+                                </div>
+                                {% else %}
+                                <div>{{form.image(class='image-input')}}</div>
+                                {% endif %}
+                            </div>
+                        </div>
+                    </div>
+                    <div class="location">
+                        <div class="place-info">
+                            <div>{{form.place.label(class='place-label')}}</div>
+                            {% if form.place.errors %}
+                            <div>{{form.place(class='place-input')}}</div>
+                            <div class="invalid-feedback">
+                                {% for error in form.place.errors %}
+                                <span>{{error}}</span>
+                                {% endfor %}
+                            </div>
+                            {% else %}
+                            <div>{{form.place(class='place-input')}}</div>
+                            {% endif %}
+                        </div>
+                    </div>
+                    <div class="date">
+                        <div class="infoEvent">
+                            <div class="date-info">
+                                <div>{{form.date.label(class='date-label')}}</div>
+                                {% if form.date.errors %} {{ form.date(class='date-input') }}
+                                <div class="invalid-feedback">
+                                    {% for error in form.date.errors %}
+                                    <span>{{error}}</span>
+                                    {% endfor %}
+                                </div>
+                                {% else %}
+                                <div>{{form.date(class='date-input')}}</div>
+                                {% endif %}
+                            </div>
+                            <div class="hour-info">
+                                <div>{{form.hour.label(class='hour-label')}}</div>
+                                {% if form.hour.errors %} {{ form.hour(class='hour-input') }}
+                                <div class="invalid-feedback">
+                                    {% for error in form.hour.errors %}
+                                    <span>{{error}}</span>
+                                    {% endfor %}
+                                </div>
+                                {% else %}
+                                <div>{{form.hour(class='hour-input')}}</div>
+                                {% endif %}
+                            </div>
+                        </div>
+                    </div>
+                    <div class="bouton-submit">{{form.submit(id='sumit')}}</div>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
+{% endblock %}

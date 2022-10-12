@@ -1,7 +1,7 @@
 from mypass import app, db, bcrypt
 from mypass.models import Users, Type_Event, Category
 from flask import render_template, url_for, flash, redirect, request
-from mypass.forms import EditForm, LoginForm, RegistrationForm
+from mypass.forms import EditForm, LoginForm, RegistrationForm, PostForm
 from random import choice
 from flask_login import login_user, current_user, logout_user, login_required
 
@@ -67,9 +67,10 @@ def Event():
 
 
 @app.route('/create_event')
-@login_required
+# @login_required
 def createEvent():
-    return render_template('createEvent.html')
+    form = PostForm()
+    return render_template('createEvent.html', form=form)
 
 
 @app.route('/edit_event', methods=['GET', 'POST'])
