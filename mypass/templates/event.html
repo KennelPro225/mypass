@@ -1,8 +1,15 @@
-{% extends 'layout.html' %} {% block content %} 
-<!-- {{events.id}} -->
-<img
-  src="{{events}}"
-  alt="EDF"
-/>
-
- {% endblock %}
+{% extends 'layout.html' %} {% block content %}
+{% for event in events%}
+<div class="eventPost">
+  <div class="event-card">
+    <div class="image-event">{{event.id}}</div>
+    <div class="event-infoCard">
+      <!-- <div class="eventTitle">{{author}}</div> -->
+      <div class="event-place">{{event.place}}</div>
+      <div class="event-date">{{event.date_event}}</div>
+      <div class="event-hour">{{event.time_event}}</div>
+    </div>
+  </div>
+</div>
+{%endfor%}
+{% endblock %}

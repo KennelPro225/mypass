@@ -62,15 +62,20 @@ def signUp():
     return render_template('signUp.html', title='Inscription', form=form)
 
 
+def author(user_id):
+    user = Users.query.filter_by(id=user_id).first()
+    return user.first_name + ' ' + user.last_name
+
+
 @app.route('/event', methods=['GET', 'POST'])
 @login_required
 def Event():
     events = Events.query.all()
-    print(type(events))
-    
+    print(events)
+    # auteur= sql-select
     # for event in events:
-    filename = url_for('static', filename='./thumbnails/images/'+ events[0].place)
-    return render_template('event.html', events=filename)
+    # filename = url_for('static', filename='./thumbnails/images/'+ events[0].place)
+    return render_template('event.html', events=events)
 
 
 def save_picture(form_picture):
