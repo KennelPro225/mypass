@@ -234,8 +234,17 @@
     justify-content: space-between;
     margin: 5px 0;
   }
-  .location,.date{
-    margin: 25px 0;
+  .location,.date,.eventInfo{
+    padding: 15px;
+  }
+  #form-items{
+    padding: 55px 0;
+  }
+  .title{
+    color: #ffe9f3;
+    font-size: 1.6rem;
+    font-family: railway;
+    margin-right: 25vw;
   }
   .title-label,
   .type-label,
@@ -262,7 +271,7 @@
   .title-input,
   .place-input {
     width: 50vw;
-    height: 45px;
+    height: 50px;
     border-radius: 0.6rem;
     outline: none;
     border: none;
@@ -275,7 +284,7 @@
   .date-input,
   .hour-input {
     background-color: #d9d9d9;
-    height: 45px;
+    height: 50px;
     width: 22vw;
     border-radius: 0.6rem;
     outline: none;
@@ -294,6 +303,11 @@
     display: flex;
     justify-content: center;
   }
+  #flash-message{
+    color: #ffe9f3;
+    font-size: 1.2rem;
+  }
+ 
 }
 
 /* 
@@ -506,6 +520,86 @@
     min-height: 80vh;
     border-radius: 0.6rem;
   }
+  .infoEvent {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin: 5px 0;
+  }
+  .location,.date,.eventInfo{
+    padding: 15px;
+  }
+  #form-items{
+    padding: 55px 0;
+  }
+  .title{
+    color: #ffe9f3;
+    font-size: 1.6rem;
+    font-family: railway;
+    margin-right: 25vw;
+  }
+  .title-label,
+  .type-label,
+  .date-label,
+  .hour-label,
+  .image-label,
+  .seat-label,
+  .place-label,
+  .category-label {
+    color: #ffe9f3;
+    font-size: 1.2rem;
+  }
+  .title-label::after,
+  .type-label::after,
+  .date-label::after,
+  .hour-label::after,
+  .seat-label::after,
+  .place-label::after,
+  .category-label::after {
+    content: " *";
+    color: #b3001b;
+    font-size: 1rem;
+  }
+  .title-input,
+  .place-input {
+    width: 60vw;
+    height: 45px;
+    border-radius: 0.6rem;
+    outline: none;
+    border: none;
+    background-color: #d9d9d9;
+  }
+  .image-input,
+  .type-input,
+  .category-input,
+  .seat-input,
+  .date-input,
+  .hour-input {
+    background-color: #d9d9d9;
+    height: 45px;
+    width: 28vw;
+    border-radius: 0.6rem;
+    outline: none;
+    border: none;
+  }
+  input {
+    background-color: #d9d9d9;
+  }
+  select {
+    background-color: #d9d9d9;
+  }
+  input:focus {
+    outline: none;
+  }
+  .info-form{
+    display: flex;
+    justify-content: center;
+  }
+  #flash-message{
+    color: #ffe9f3;
+    font-size: 1.2rem;
+  }
+ 
 }
 
 /* 
@@ -722,4 +816,83 @@
     min-height: 80vh;
     border-radius: 0.6rem;
   }
+
+  .infoEvent {
+    margin: 5px 0;
+  }
+  .location,.date,.eventInfo{
+    padding: 15px;
+  }
+  #form-items{
+    padding: 55px 0;
+  }
+  .title{
+    color: #ffe9f3;
+    font-size: 1.1rem;
+    font-family: railway;
+    margin-right: 25vw;
+  }
+  .title-label,
+  .type-label,
+  .date-label,
+  .hour-label,
+  .image-label,
+  .seat-label,
+  .place-label,
+  .category-label {
+    color: #ffe9f3;
+    font-size: 0.8rem;
+  }
+  .title-label::after,
+  .type-label::after,
+  .date-label::after,
+  .hour-label::after,
+  .seat-label::after,
+  .place-label::after,
+  .category-label::after {
+    content: " *";
+    color: #b3001b;
+    font-size: 0.5rem;
+  }
+  .title-input,
+  .place-input {
+    width: 80vw;
+    height: 40px;
+    border-radius: 0.6rem;
+    outline: none;
+    border: none;
+    background-color: #d9d9d9;
+  }
+  .image-input,
+  .type-input,
+  .category-input,
+  .seat-input,
+  .date-input,
+  .hour-input {
+    background-color: #d9d9d9;
+    height: 50px;
+    width: 80vw;
+    border-radius: 0.6rem;
+    outline: none;
+    border: none;
+  }
+  input {
+    background-color: #d9d9d9;
+  }
+  select {
+    background-color: #d9d9d9;
+  }
+  input:focus {
+    outline: none;
+  }
+  .info-form{
+    display: flex;
+    justify-content: center;
+  }
+  #flash-message{
+    color: #ffe9f3;
+    font-size: 1.2rem;
+  }
+ 
 }
+

@@ -50,7 +50,8 @@ class PostForm(FlaskForm):
     category = SelectField("Catégories", choices=choice,
                            validators=[DataRequired()])
     seat = IntegerField('Nombre de Places', validators=[DataRequired()])
-    image = FileField('Image Illustrative', validators=[DataRequired()])
+    image = FileField('Image Illustrative', validators=[
+                      FileAllowed(['jpg', 'png', 'jpeg'])])
     place = StringField('Lieu', validators=[DataRequired()])
     date = DateField('Date', validators=[DataRequired()])
     hour = TimeField('Heure', validators=[DataRequired()])

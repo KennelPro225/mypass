@@ -13,7 +13,7 @@ class Users(db.Model, UserMixin):
     last_name = db.Column('last_name', db.String(length=100), nullable=False)
     first_name = db.Column('first_name', db.String(length=100), nullable=False)
     image_profile = db.Column(db.String(200), nullable=False,
-                              default='./thumbnail/default.png')
+                              default='static/thumbnails/profile_pics/default.png')
     email = db.Column('user_email', db.String(
         length=100), unique=True, nullable=False)
     password = db.Column('password', db.String(length=100), nullable=False)
@@ -48,7 +48,7 @@ class Events(db.Model):
     time_event = db.Column(db.Time, nullable=False)
     seat = db.Column('nombre_places', db.Integer, nullable=False)
     image = db.Column('image', db.String(length=200),
-                      default='defaultTheme.png')
+                      default='static/thumbnails/images/defaultTheme.png')
     date_post = db.Column(db.DateTime, nullable=False,
                           default=datetime.utcnow)
 
