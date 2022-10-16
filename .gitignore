@@ -2,3 +2,4 @@ env/
 mypass/.git/
 categories.txt
 color.txt
+mypass/test.py

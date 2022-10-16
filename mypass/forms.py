@@ -49,7 +49,8 @@ class PostForm(FlaskForm):
     # description = TextAreaField("Desription de l'évènement")
     category = SelectField("Catégories", choices=choice,
                            validators=[DataRequired()])
-    seat = IntegerField('Nombre de Places', validators=[DataRequired()])
+    seat = IntegerField('Nombre de Places', validators=[
+                        DataRequired(), NumberRange(min=0, max=1000000)])
     image = FileField('Image Illustrative', validators=[
                       FileAllowed(['jpg', 'png', 'jpeg'])])
     place = StringField('Lieu', validators=[DataRequired()])
@@ -66,4 +67,10 @@ class EditForm(FlaskForm):
                       FileAllowed(['jpg', 'png', 'jpeg'])])
     date = DateField('Date', validators=[DataRequired()])
     hour = TimeField('Heure', validators=[DataRequired()])
-    submit = SubmitField("Add")
+    submit = SubmitField("Editer")
+
+
+class Participation(FlaskForm):
+    nombre = IntegerField('Nombre de Places', validators=[
+                          DataRequired(), NumberRange(min=0, max=1000000)])
+    submit = SubmitField("Participer")

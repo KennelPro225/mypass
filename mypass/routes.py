@@ -1,9 +1,10 @@
 from mypass import app, db, bcrypt
 import secrets
 import os
-from mypass.models import Category, Type_Event, Users, Events
+from datetime import datetime
+from mypass.models import Category, Type_Event, Users, Events, Tickets
 from flask import render_template, url_for, flash, redirect, request
-from mypass.forms import EditForm, LoginForm, RegistrationForm, PostForm
+from mypass.forms import EditForm, LoginForm, RegistrationForm, PostForm, Participation
 from random import choice
 from flask_login import login_user, current_user, logout_user, login_required
 
@@ -70,12 +71,27 @@ def author(user_id):
 @app.route('/event', methods=['GET', 'POST'])
 @login_required
 def Event():
+    button = Participation()
+    data = []
     events = Events.query.all()
-    print(events)
-    # auteur= sql-select
-    # for event in events:
-    # filename = url_for('static', filename='./thumbnails/images/'+ events[0].place)
-    return render_template('event.html', events=events)
+    for event in events:
+        data.append({'id': event.id, "title": event.title, "date": event.date_event.strftime('%a, %b. %y'), "heure": event.time_event.strftime('%H:%M'), "lieu": event.place,
+                    "image": url_for('static', filename='thumbnails/images/{}'.format(event.image))}),
+    return render_template('event.html', datas=data, button=button)
+
+
+@app.route('/event/<event_id>', methods=['GET', 'POST'])
+def EventView(event_id):
+    data = []
+    button = Participation()
+    events = Events.query.get(event_id)
+    event = Events.query.filter_by(id=event_id).all()
+    data.append({'id': event[0].id, "title": event[0].title, "date": event[0].date_event.strftime('%a, %b. %y'), "heure": event[0].time_event.strftime('%H:%M'), "lieu": event[0].place,
+                 "image": url_for('static', filename='thumbnails/images/{}'.format(event[0].image))}),
+    print(data)
+    return render_template('eventview.html', datas=data, button=button)
+    if button.is_submitted:
+        participant = Tickets(user=current_user.id)
 
 
 def save_picture(form_picture):
@@ -88,14 +104,16 @@ def save_picture(form_picture):
     return picture_fn
 
 
-@app.route('/create_event', methods=['GET', 'POST'])
-@login_required
+@ app.route('/create_event', methods=['GET', 'POST'])
+@ login_required
 def createEvent():
     form = PostForm()
     if form.validate_on_submit():
         category = Category.query.filter_by(
             category=form.category.data).first()
         type = Type_Event.query.filter_by(name=form.type.data).first()
+        post = Events(title=form.title.data, category=category.id, author=current_user.id, type=type.id, place=form.place.data,
+                      date_event=form.date.data, time_event=form.hour.data, seat=form.seat.data)
         if form.image.data:
             image_file = save_picture(form.image.data)
             post = Events(title=form.title.data, category=category.id, author=current_user.id, type=type.id, place=form.place.data,
@@ -103,35 +121,36 @@ def createEvent():
         db.session.add(post)
         db.session.commit()
         return redirect(url_for('Event'))
-    return render_template('createEvent.html', form=form, title='Evènements')
+    return render_template('createEvent.html', form=form, title='Créer un Evènement')
 
 
-@app.route('/edit_event', methods=['GET', 'POST'])
-@login_required
+@ app.route('/edit_event', methods=['GET', 'POST'])
+@ login_required
 def editEvent():
     form = EditForm()
     return render_template('editeEvent.html', form=form, title='Editer cet évènement')
 
 
-@app.route('/delete_event', methods=['GET', 'POST'])
-@login_required
+@ app.route('/delete_event', methods=['GET', 'POST'])
+@ login_required
 def deleteEvent():
     return render_template('deleteEvent.html', title='Supprimer cet évènement')
 
 
-@app.route('/user/profile', methods=['GET', 'POST'])
-@login_required
-def profile():
+@ app.route('/user/', methods=['GET', 'POST'])
+@ login_required
+def profile(user_id):
+    events = Users.query.get(user_id)
     return render_template('profile.html', title='Profile')
 
 
-@app.route('/category/', methods=['GET', 'POST'])
-@login_required
+@ app.route('/category/', methods=['GET', 'POST'])
+@ login_required
 def category():
     return render_template('category.html', title='Catégories')
 
 
-@app.route('/ticket', methods=['GET', 'POST'])
-@login_required
+@ app.route('/ticket', methods=['GET', 'POST'])
+@ login_required
 def ticket():
     return render_template('ticket.html')
