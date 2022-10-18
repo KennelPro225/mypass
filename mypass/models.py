@@ -60,6 +60,7 @@ class Tickets(db.Model):
     event = db.Column('event_name', db.Integer,
                       db.ForeignKey(Events.id), nullable=False)
     nombre_ticket = db.Column('ticket', db.Integer, nullable=False)
+    numero_ticket = db.Column('numero_ticket', db.Integer, nullable=False)
 
 
 class Admin(db.Model, UserMixin):

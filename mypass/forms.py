@@ -35,7 +35,7 @@ category = Category.query.all()
 choice = []
 for cate in category:
     choice.append("{}".format(cate.category))
-
+#
 type = Type_Event.query.all()
 choices = []
 for typeE in type:
@@ -60,17 +60,20 @@ class PostForm(FlaskForm):
 
 
 class EditForm(FlaskForm):
-    title = StringField("Titre de l'évènement", validators=[DataRequired()])
-    seat = IntegerField('Nombre de Places', validators=[
-                        DataRequired(), NumberRange(min=0, max=1000000)])
-    image = FileField('Image Illustrative', validators=[
+    title = StringField("Modification Titre de l'évènement")
+    seat = IntegerField('Modification Nombre de Places', validators=[
+                        NumberRange(min=0, max=1000000)])
+    image = FileField("Modification de l'image", validators=[
                       FileAllowed(['jpg', 'png', 'jpeg'])])
-    date = DateField('Date', validators=[DataRequired()])
-    hour = TimeField('Heure', validators=[DataRequired()])
-    submit = SubmitField("Editer")
+    date = DateField('Modification de la Date')
+    hour = TimeField("Modification de l'Heure")
+    place = StringField("Modification du lieu")
+    submit = SubmitField("Apporter des modifications")
 
 
-class Participation(FlaskForm):
-    nombre = IntegerField('Nombre de Places', validators=[
-                          DataRequired(), NumberRange(min=0, max=1000000)])
-    submit = SubmitField("Participer")
+class EventViewt(FlaskForm):
+    submit = SubmitField("Voir Plus")
+
+
+class Ticket(FlaskForm):
+    submit = SubmitField("Je participe")

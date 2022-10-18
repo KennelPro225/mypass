@@ -12,13 +12,16 @@
         <div class="event-hour">{{data.heure}}</div>
       </div>
       <div class="event-place">{{data.lieu}}</div>
+      <div class="event-author">
+        <a href="{{url_for('profileuser', user_id = data.author_id)}}"
+          >{{data.author}}</a
+        >
+      </div>
       <div>
-        <form action="" method="post">
-          {{button.nombre}}
-          <a href="{{url_for('EventView', event_id = data.id)}}"
-            >{{button.submit}}</a
+          <a
+            href="{{url_for('ticket', event_id=data.id, user_id=current_user.id)}}"
+            ><button>Je participe</button></a
           >
-        </form>
       </div>
     </div>
   </div>

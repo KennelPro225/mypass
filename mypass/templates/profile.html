@@ -1,0 +1,48 @@
+{% extends 'layout.html' %} {% block content %}
+<div class="profile">
+  <div>
+    <div class="imageProfile">
+      <div class="circle">
+        <img src="{{image}}" alt="Profile Picture" class="photo" />
+      </div>
+    </div>
+    <div class="userInformation">
+      <div class="username">
+        {{current_user.first_name}} {{current_user.last_name}}
+      </div>
+    </div>
+
+    <div class="pathlink">
+      <a href="#"> Voir Informations Profile </a>
+      <div class="trait"></div>
+      <a href="#">Modifier Informations Profile</a>
+    </div>
+
+    <div class="eventPublication">
+      <div>
+        {% for data in datas%}
+        <div class="event-carte">
+          <div class="image-event">
+            <img src={{ data.image }} class="image-ticket" />
+          </div>
+          <div class="event-infoCarte">
+            <div class="eventTitle">{{data.title}}</div>
+            <div class="dateInfo">
+              <div class="event-date">{{data.date}}</div>
+              <div class="event-hour">{{data.heure}}</div>
+            </div>
+            <div class="event-place">{{data.lieu}}</div>
+            <div class="button-profile">
+              <a href="{{url_for('editEvent',event_id=data.id)}}">
+                <button class="button_edit">Editer</button>
+              </a>
+              <button class="button_delete">Supprimer</button>
+            </div>
+          </div>
+        </div>
+        {%endfor%}
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}
