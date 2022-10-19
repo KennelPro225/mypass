@@ -1,12 +1,37 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-</head>
-<body>
-    {{current_user.last_name}} {{current_user.first_name}}
-</body>
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>{{current_user.user_id}}</title>
+  </head>
+
+  <body>
+    {% for data in datas%}
+    <div class="event-in">Ticket N°<span>{{data.numero_ticket}}-{{data.id}}</span></div>
+    <div class="ticket">
+      <div class="event-info">
+        <div class="title">
+          <h1>{{data.title}}</h1>
+        </div>
+        <div class="event-image">
+          <div class="simulator"></div>
+        </div>
+      </div>
+      <div class="event-in">
+        <div class="event-place">{{data.lieu}}</div>
+        <div class="event-date">{{data.date}}  {{data.heure}}</div>
+      </div>
+      <div class="event-in">
+        <div class="commande">Commande gratuite</div>
+      </div>
+      <small>Informations de commande</small>
+      <div class="event-in">
+        Commande N°<span>{{data.numero_ticket}}</span> Commandé par
+        <span>{{data.user}}</span>
+      </div>
+    </div>
+    {%endfor%}
+  </body>
 </html>

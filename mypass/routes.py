@@ -1,13 +1,14 @@
-from mypass import app, db, bcrypt
+from email.mime import image
 import secrets
 import os
 import pdfkit
-from datetime import datetime
-from mypass.models import Category, Type_Event, Users, Events, Tickets
-from flask import Response, abort, make_response, render_template, url_for, flash, redirect, request
-from mypass.forms import EditForm, LoginForm, RegistrationForm, PostForm, EventViewt, Ticket
 from random import choice
+from datetime import datetime
+from mypass import app, db, bcrypt
+from mypass.models import Category, Type_Event, Users, Events, Tickets
 from flask_login import login_user, current_user, logout_user, login_required
+from mypass.forms import EditForm, LoginForm, RegistrationForm, PostForm, EventViewt, Ticket
+from flask import Response, abort, make_response, render_template, url_for, flash, redirect, request
 
 
 @app.route('/')
@@ -122,11 +123,15 @@ def EventView(event_id):
 @ app.route('/event/ticket/<event_id>/<user_id>', methods=['GET'])
 @ login_required
 def ticket(event_id, user_id):
+    number = range(2999999929, 10000000000, 1)
+    code = choice(number)
     data = []
     event = Events.query.get(event_id)
     current_user.id = user_id
-    data.append({'id': event.id, "title": event.title, "date": event.date_event.strftime('%a, %b. %y'), 'user_id': current_user.id, 'user': current_user.first_name + ' ' + current_user.last_name, "heure": event.time_event.strftime('%H:%M'), "lieu": event.place,
-                 "image": url_for('static', filename='thumbnails/images/{}'.format(event.image))}),
+    Pass = Ticket(user=current_user.id, event=event.id,
+                  nombre_ticket=1, numero_ticket=code)
+    data.append({'id': event.id, "title": event.title, "date": event.date_event.strftime('%A, %B %Y'), 'user_id': current_user.id, 'user': current_user.first_name + ' ' + current_user.last_name, "heure": event.time_event.strftime('%H:%M'), "lieu": event.place,
+                 "image": url_for('static', filename='thumbnails/images/{}'.format(event.image)), 'numero_ticket': code}),
     rendered = render_template('ticket.html', datas=data)
     path_to_wkhtmltopdf = r'C:\Program Files\wkhtmltopdf\bin\wkhtmltopdf.exe'
     css = ['mypass/{}'.format(url_for('static', filename='ticket.css'))]
@@ -134,7 +139,8 @@ def ticket(event_id, user_id):
     pdf = pdfkit.from_string(rendered, configuration=config, css=css)
     response = make_response(pdf)
     response.headers['Context-Type'] = 'application/pdf'
-    response.headers['Content-Disposition'] = 'inline; filename=evenTicket.pdf'
+    response.headers['Content-Disposition'] = 'attachment; filename={}-{}.pdf'.format(
+        code, current_user.user_id)
     return response
 
 
@@ -186,14 +192,22 @@ def profile():
         data.append({'id': event.id, "title": event.title, "date": event.date_event.strftime('%a, %b. %y'), "heure": event.time_event.strftime('%H:%M'), "lieu": event.place,
                     "image": url_for('static', filename='thumbnails/images/{}'.format(event.image))})
 
-    return render_template('profile.html', title='Profile', image=image_file, datas=data)
+    return render_template('profile.html', title='Profile {} {}'.format(current_user.first_name, current_user.last_name), image=image_file, datas=data)
 
 
 @ app.route('/profile/user/<user_id>', methods=['GET', 'POST'])
 @ login_required
 def profileuser(user_id):
-    events = Users.query.get(int(user_id))
-    return render_template('profile.html', title='Profile')
+    data = []
+    user = Users.query.get(int(user_id))
+    events = Events.query.filter_by(author=user.id).all()
+    if user.id == current_user.id:
+        return redirect(url_for('profile'))
+    else:
+        for event in events:
+            data.append({'id': event.id, "title": event.title, "date": event.date_event.strftime('%a, %b. %y'), "heure": event.time_event.strftime('%H:%M'), "lieu": event.place, "image": url_for(
+                "static", filename="thumbnails/images/{}".format(event.image)), "username": user.first_name + " " + user.last_name, "profile_image":  url_for("static", filename="/thumbnails/profile_pics/" + user.image_profile)})
+        return render_template('userProfile.html', title='Profile', datas=data)
 
 
 @ app.route('/category/', methods=['GET', 'POST'])

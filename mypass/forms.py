@@ -1,9 +1,9 @@
 from flask_wtf import FlaskForm
-from wtforms import StringField, PasswordField, SubmitField, BooleanField, TimeField, DateField, SelectField, IntegerField
 from flask_wtf.file import FileField, FileAllowed
-from wtforms.validators import DataRequired, Email, EqualTo, ValidationError, NumberRange
-
 from mypass.models import Users, Category, Type_Event
+from wtforms.validators import DataRequired, Email, EqualTo, ValidationError, NumberRange
+from wtforms import StringField, PasswordField, SubmitField, BooleanField, TimeField, DateField, SelectField, IntegerField
+
 
 
 class LoginForm(FlaskForm):

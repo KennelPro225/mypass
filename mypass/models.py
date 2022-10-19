@@ -1,6 +1,6 @@
-from mypass import db, loginManager
 from datetime import datetime
 from flask_login import UserMixin
+from mypass import db, loginManager
 
 
 @loginManager.user_loader

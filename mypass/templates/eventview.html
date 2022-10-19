@@ -6,21 +6,21 @@
       <img src={{ data.image }} class="image-ticket" />
     </div>
     <div class="event-infoCard">
-      <div class="eventTitle">{{data.title}}</div>
+      <div class="eventTitle"><span>Titre:</span> {{data.title}}</div>
       <div class="dateInfo">
-        <div class="event-date">{{data.date}}</div>
+        <div class="event-date"><span>Date et Heure:</span> {{data.date}}</div>
         <div class="event-hour">{{data.heure}}</div>
       </div>
-      <div class="event-place">{{data.lieu}}</div>
-      <div class="event-author">
+      <div class="event-place">Lieu: <span>{{data.lieu}}</span> </div>
+      <div class="event-author"> Auteur: 
         <a href="{{url_for('profileuser', user_id = data.author_id)}}"
           >{{data.author}}</a
         >
       </div>
-      <div>
+      <divc class="buttonEventview">
           <a
             href="{{url_for('ticket', event_id=data.id, user_id=current_user.id)}}"
-            ><button>Je participe</button></a
+            ><button>Je prends mon ticket</button></a
           >
       </div>
     </div>
