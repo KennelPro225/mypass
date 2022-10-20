@@ -3,27 +3,29 @@
   <div>
     <div class="imageProfile">
       <div class="circle">
-        <img src={{datas[0].profile_image}} alt="Profile Picture" class="photo" />
+        <img
+          src="{{datas[0].profile_image}}"
+          alt="Profile Picture"
+          class="photo"
+        />
       </div>
     </div>
     <div class="userInformation">
-      <div class="username">
-        {{datas[0].username}}
-      </div>
-    </div>
-
-    <div class="pathlink">
-      <a href="#"> Voir Informations Profile </a>
-      <div class="trait"></div>
-      <a href="#">Modifier Informations Profile</a>
+      <div class="username">{{datas[0].username}}</div>
     </div>
 
     <div class="eventPublication">
       <div>
-        {% for data in datas%}
+        {%if datas|length > 1 %}
+        <div><h1 class="label">Evènements publiés</h1></div>
+        {%elif datas|length == 1 %}
+        <div><h1 class="label">Aucune Publication</h1></div>
+        {%else%}
+        <div><h1 class="label">Evènement publié</h1></div>
+        {%endif%} {% for data in datas%}
         <div class="event-carte">
           <div class="image-even">
-            <img src={{ data.image }} class="image-pub" />
+            <img src={{data.image}} class="image-pub" />
           </div>
           <div class="event-infoCarte">
             <div class="eventTitle">{{data.title}}</div>

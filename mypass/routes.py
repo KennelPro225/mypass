@@ -76,8 +76,8 @@ def save_picture(form_picture):
     return picture_fn
 
 
-@ app.route('/create_event', methods=['GET', 'POST'])
-@ login_required
+@app.route('/create_event', methods=['GET', 'POST'])
+@login_required
 def createEvent():
     form = PostForm()
     if form.validate_on_submit():
@@ -120,8 +120,8 @@ def EventView(event_id):
     return render_template('eventview.html', datas=data, button=button, title='Prendre sont ticket')
 
 
-@ app.route('/event/ticket/<event_id>/<user_id>', methods=['GET'])
-@ login_required
+@app.route('/event/ticket/<event_id>/<user_id>', methods=['POST', 'GET'])
+@login_required
 def ticket(event_id, user_id):
     number = range(2999999929, 10000000000, 1)
     code = choice(number)
@@ -133,10 +133,8 @@ def ticket(event_id, user_id):
     data.append({'id': event.id, "title": event.title, "date": event.date_event.strftime('%A, %B %Y'), 'user_id': current_user.id, 'user': current_user.first_name + ' ' + current_user.last_name, "heure": event.time_event.strftime('%H:%M'), "lieu": event.place,
                  "image": url_for('static', filename='thumbnails/images/{}'.format(event.image)), 'numero_ticket': code}),
     rendered = render_template('ticket.html', datas=data)
-    path_to_wkhtmltopdf = r'C:\Program Files\wkhtmltopdf\bin\wkhtmltopdf.exe'
-    css = ['mypass/{}'.format(url_for('static', filename='ticket.css'))]
-    config = pdfkit.configuration(wkhtmltopdf=path_to_wkhtmltopdf)
-    pdf = pdfkit.from_string(rendered, configuration=config, css=css)
+    config = pdfkit.configuration()
+    pdf = pdfkit.from_string(rendered, configuration=config)
     response = make_response(pdf)
     response.headers['Context-Type'] = 'application/pdf'
     response.headers['Content-Disposition'] = 'attachment; filename={}-{}.pdf'.format(
@@ -144,8 +142,8 @@ def ticket(event_id, user_id):
     return response
 
 
-@ app.route('/event/e/<event_id>/update', methods=['GET', 'POST'])
-@ login_required
+@app.route('/event/e/<event_id>/update', methods=['GET', 'POST'])
+@login_required
 def editEvent(event_id):
     form = EditForm()
     event = Events.query.get(event_id)
@@ -175,14 +173,17 @@ def editEvent(event_id):
     return render_template('editeEvent.html', form=form, title='Editer cet évènement', event=event)
 
 
-@ app.route('/delete_event', methods=['GET', 'POST'])
-@ login_required
-def deleteEvent():
-    return render_template('deleteEvent.html', title='Supprimer cet évènement')
+@app.route('/delete_event/<event_id>', methods=['GET', 'POST'])
+@login_required
+def deleteEvent(event_id):
+    event = Events.query.get(event_id)
+    db.session.delete(event)
+    db.session.commit()
+    return redirect(url_for('profile', event_id=event.id))
 
 
-@ app.route('/profile/', methods=['GET'])
-@ login_required
+@app.route('/profile/', methods=['GET'])
+@login_required
 def profile():
     data = []
     image_file = url_for(
@@ -191,12 +192,11 @@ def profile():
     for event in events:
         data.append({'id': event.id, "title": event.title, "date": event.date_event.strftime('%a, %b. %y'), "heure": event.time_event.strftime('%H:%M'), "lieu": event.place,
                     "image": url_for('static', filename='thumbnails/images/{}'.format(event.image))})
-
     return render_template('profile.html', title='Profile {} {}'.format(current_user.first_name, current_user.last_name), image=image_file, datas=data)
 
 
-@ app.route('/profile/user/<user_id>', methods=['GET', 'POST'])
-@ login_required
+@app.route('/profile/user/<user_id>', methods=['GET', 'POST'])
+@login_required
 def profileuser(user_id):
     data = []
     user = Users.query.get(int(user_id))
@@ -210,7 +210,7 @@ def profileuser(user_id):
         return render_template('userProfile.html', title='Profile', datas=data)
 
 
-@ app.route('/category/', methods=['GET', 'POST'])
-@ login_required
+@app.route('/category/', methods=['GET', 'POST'])
+@login_required
 def category():
     return render_template('category.html', title='Catégories')

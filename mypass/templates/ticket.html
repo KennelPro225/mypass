@@ -7,29 +7,66 @@
     <title>{{current_user.user_id}}</title>
   </head>
 
-  <body>
+  <body
+    style="
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 10px;
+    "
+  >
     {% for data in datas%}
-    <div class="event-in">Ticket N°<span>{{data.numero_ticket}}-{{data.id}}</span></div>
-    <div class="ticket">
-      <div class="event-info">
-        <div class="title">
-          <h1>{{data.title}}</h1>
+    <div style="border: 2px dotted #b3001b; padding: 15px">
+      <div class="event-in" style="margin-top: 15px; font-weight: 500">
+        Ticket N°<span style="font-weight: 600"
+          >{{data.numero_ticket}}-{{data.id}}</span
+        >
+      </div>
+      <div
+        class="ticket"
+        style="
+          border: 5px dotted #b3001b;
+          min-height: 50vh;
+          width: 800px;
+          margin: 20px;
+          padding: 15px;
+        "
+      >
+        <div
+          class="event-info"
+          style="display: flex; justify-content: space-between"
+        >
+          <div class="title">
+            <h1>{{data.title}}</h1>
+          </div>
+          <div class="event-image">
+            <div class="simulator" style="width: 150px; height: 100px"></div>
+          </div>
         </div>
-        <div class="event-image">
-          <div class="simulator"></div>
+        <div class="event-in" style="margin-top: 15px; font-weight: 500">
+          <div
+            class="event-place"
+            style="margin-bottom: 10px; font-weight: 500"
+          >
+            {{data.lieu}}
+          </div>
+          <div class="event-date" style="font-weight: 500; color: #b3001b">
+            {{data.date}} {{data.heure}}
+          </div>
         </div>
-      </div>
-      <div class="event-in">
-        <div class="event-place">{{data.lieu}}</div>
-        <div class="event-date">{{data.date}}  {{data.heure}}</div>
-      </div>
-      <div class="event-in">
-        <div class="commande">Commande gratuite</div>
-      </div>
-      <small>Informations de commande</small>
-      <div class="event-in">
-        Commande N°<span>{{data.numero_ticket}}</span> Commandé par
-        <span>{{data.user}}</span>
+        <div class="event-in" style="margin-top: 15px; font-weight: 500">
+          <div class="commande" style="margin: 10px 0; font-weight: 600">
+            Commande gratuite
+          </div>
+        </div>
+        <small style="color: grey">Informations de commande</small>
+        <div class="event-in" style="margin-top: 15px; font-weight: 500">
+          Commande N°<span style="font-weight: 600"
+            >{{data.numero_ticket}}</span
+          >
+          Commandé par
+          <span style="font-weight: 600">{{data.user}}</span>
+        </div>
       </div>
     </div>
     {%endfor%}
