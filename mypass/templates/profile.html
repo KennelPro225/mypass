@@ -22,6 +22,8 @@
       <div>
         {%if datas|length > 1 %}
         <div><h1 class="label">Evènements publiés</h1></div>
+        {%elif datas|length == 0 %}
+        <div><h1 class="label">Aucune Publication</h1></div>
         {%else%}
         <div><h1 class="label">Evènement publié</h1></div>
         {%endif%} {% for data in datas%}

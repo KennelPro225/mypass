@@ -1,12 +1,24 @@
 {% extends 'layout.html' %} {% block content %}
-<form action="{{url_for('editEvent',event_id=event.id)}}" method="post" enctype="multipart/form-data">
-  <div>{{form.title}}</div>
-  <div>{{form.date}}</div>
-  <div>{{form.hour}}</div>
-  <div>{{form.place}}</div>
-  <div>{{form.seat}}</div>
-  <div>{{form.image}}</div>
-  {{form.submit}}
-</form>
+<div class="center">
+  <form
+    action="{{url_for('editEvent',event_id=event.id)}}"
+    method="post"
+    enctype="multipart/form-data"
+  >
+    <div>{{form.title.label (class='editLabel')}}</div>
+    <div>{{form.title (class='edit-input')}}</div>
+    <div>{{form.date.label (class='editLabel')}}</div>
+    <div>{{form.date (class='edit-input')}}</div>
+    <div>{{form.hour.label (class='editLabel')}}</div>
+    <div>{{form.hour (class='edit-input')}}</div>
+    <div>{{form.place.label (class='editLabel')}}</div>
+    <div>{{form.place (class='edit-input')}}</div>
+    <div>{{form.seat.label (class='editLabel')}}</div>
+    <div>{{form.seat (class='edit-input')}}</div>
+    <div>{{form.image.label (class='editLabel')}}</div>
+    <div>{{form.image (class='edit-input')}}</div>
 
+    <div class="submit">{{form.submit (id='test-button')}}</div>
+  </form>
+</div>
 {% endblock %}

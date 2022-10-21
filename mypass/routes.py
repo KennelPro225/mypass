@@ -128,8 +128,14 @@ def ticket(event_id, user_id):
     data = []
     event = Events.query.get(event_id)
     current_user.id = user_id
-    Pass = Ticket(user=current_user.id, event=event.id,
-                  nombre_ticket=1, numero_ticket=code)
+    a = 1
+    b = current_user.id
+    c = event.id
+    d = code
+    print('{}  {}  {}  {}'.format(a, b, c, d))
+    tass = Tickets(user=b, event=c, nombre_ticket=a, numero_ticket=d)
+    db.session.add(tass)
+    db.session.commit()
     data.append({'id': event.id, "title": event.title, "date": event.date_event.strftime('%A, %B %Y'), 'user_id': current_user.id, 'user': current_user.first_name + ' ' + current_user.last_name, "heure": event.time_event.strftime('%H:%M'), "lieu": event.place,
                  "image": url_for('static', filename='thumbnails/images/{}'.format(event.image)), 'numero_ticket': code}),
     rendered = render_template('ticket.html', datas=data)
