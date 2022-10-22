@@ -43,6 +43,7 @@
   </div>
 </div>
 {%endif%}
+{% if current_user.is_authenticated %} {% else %}
 <div class="section-third">
   <div class="category">
     <h2 class="text-category">Catégories</h2>
@@ -160,4 +161,5 @@
     </a>
   </div>
 </div>
+{%endif%}
 {% endblock content %}

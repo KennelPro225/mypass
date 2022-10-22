@@ -1,7 +1,6 @@
-from email.mime import image
-import secrets
 import os
 import pdfkit
+import secrets
 from random import choice
 from datetime import datetime
 from mypass import app, db, bcrypt
