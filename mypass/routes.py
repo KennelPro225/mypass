@@ -25,10 +25,10 @@ def home():
 
 @app.route('/login', methods=['GET', 'POST'])
 def login():
+    form = LoginForm()
     if current_user.is_authenticated:
         return redirect(url_for('home'))
 
-    form = LoginForm()
     if form.validate_on_submit():
         user = Users.query.filter_by(email=form.email.data).first()
         if user and bcrypt.check_password_hash(user.password, form.password.data):
@@ -38,7 +38,7 @@ def login():
         else:
             flash(
                 "Erreur lors de la connexion, verifez si le mot de passe et l'email sont correctes ", 'danger')
-    return render_template('login.html', title='Connexion', form=form)
+    return render_template('auth/login.html', title='Connexion', form=form)
 
 
 @app.route('/logout')
@@ -65,7 +65,7 @@ def signUp():
         db.session.commit()
         flash(f"Votre inscription a bien été pris en compte. Vous pouvez maintenant vous connecter!", 'success')
         return redirect(url_for('login'))
-    return render_template('signUp.html', title='Inscription', form=form)
+    return render_template('auth/signUp.html', title='Inscription', form=form)
 
 
 def author(user_id):
@@ -118,7 +118,7 @@ def createEvent():
         db.session.add(post)
         db.session.commit()
         return redirect(url_for('Event'))
-    return render_template('createEvent.html', form=form, title='Créer un Evènement')
+    return render_template('post/createEvent.html', form=form, title='Créer un Evènement')
 
 
 @app.route('/event', methods=['GET', 'POST'])
@@ -130,7 +130,7 @@ def Event():
     for event in events:
         data.append({'id': event.id, "title": event.title, "date": event.date_event.strftime('%a, %b. %y'), "heure": event.time_event.strftime('%H:%M'), "lieu": event.place,
                     "image": url_for('static', filename='thumbnails/images/{}'.format(event.image))}),
-    return render_template('event.html', datas=data, button=button, title="Plus d'évènements")
+    return render_template('post/event.html', datas=data, button=button, title="Plus d'évènements")
 
 
 @app.route('/event/<event_id>', methods=['GET', 'POST'])
@@ -142,7 +142,7 @@ def EventView(event_id):
     author = Users.query.get(event.author)
     data.append({'id': event.id, "title": event.title, "date": event.date_event.strftime('%a, %b. %y'), 'author_id': event.author, 'author': author.first_name + ' ' + author.last_name, "heure": event.time_event.strftime('%H:%M'), "lieu": event.place,
                  "image": url_for('static', filename='thumbnails/images/{}'.format(event.image))}),
-    return render_template('eventview.html', datas=data, button=button, title='Prendre sont ticket')
+    return render_template('post/eventview.html', datas=data, button=button, title='Prendre sont ticket')
 
 
 @app.route('/event/ticket/<event_id>/<user_id>', methods=['POST', 'GET'])
@@ -164,7 +164,7 @@ def ticket(event_id, user_id):
     data.append({'id': event.id, "title": event.title, "date": event.date_event.strftime('%A, %B %Y'), 'user_id': current_user.id, 'user': current_user.first_name + ' ' + current_user.last_name, "heure": event.time_event.strftime('%H:%M'), "lieu": event.place,
                  "image": url_for('static', filename='thumbnails/images/{}'.format(event.image)), 'numero_ticket': code}),
     print(data)
-    rendered = render_template('ticket.html', datas=data)
+    rendered = render_template('post/ticket.html', datas=data)
     # path_to_file = r'C:\Program Files\wkhtmltopdf\bin\wkhtmltopdf.exe'
     config = pdfkit.configuration()
     pdf = pdfkit.from_string(rendered, False, configuration=config)
@@ -202,7 +202,7 @@ def editEvent(event_id):
             form.date.data = event.date_event
             form.hour.data = event.time_event
             form.place.data = event.place
-    return render_template('editeEvent.html', form=form, title='Editer cet évènement', event=event)
+    return render_template('post/editeEvent.html', form=form, title='Editer cet évènement', event=event)
 
 
 @app.route('/delete_event/<event_id>', methods=['GET', 'POST'])
@@ -224,28 +224,7 @@ def profile():
     for event in events:
         data.append({'id': event.id, "title": event.title, "date": event.date_event.strftime('%a, %b. %y'), "heure": event.time_event.strftime('%H:%M'), "lieu": event.place,
                     "image": url_for('static', filename='thumbnails/images/{}'.format(event.image))})
-    return render_template('profile.html', title='Profile {} {}'.format(current_user.first_name, current_user.last_name), image=image_file, datas=data)
-
-
-@app.route('/profile/user/<user_id>', methods=['GET', 'POST'])
-@login_required
-def profileuser(user_id):
-    data = []
-    user = Users.query.get(int(user_id))
-    events = Events.query.filter_by(author=user.id).all()
-    if user.id == current_user.id:
-        return redirect(url_for('profile'))
-    else:
-        for event in events:
-            data.append({'id': event.id, "title": event.title, "date": event.date_event.strftime('%a, %b. %y'), "heure": event.time_event.strftime('%H:%M'), "lieu": event.place, "image": url_for(
-                "static", filename="thumbnails/images/{}".format(event.image)), "username": user.first_name + " " + user.last_name, "profile_image":  url_for("static", filename="/thumbnails/profile_pics/" + user.image_profile)})
-        return render_template('userProfile.html', title='Profile', datas=data)
-
-
-@app.route('/category/', methods=['GET', 'POST'])
-@login_required
-def category():
-    return render_template('category.html', title='Catégories')
+    return render_template('account/profile.html', title='Profile {} {}'.format(current_user.first_name, current_user.last_name), image=image_file, datas=data)
 
 
 @app.route('/updateAccount', methods=['GET', 'POST'])
@@ -266,7 +245,22 @@ def updateAccount():
         form.firstName.data = current_user.first_name
         form.lastName.data = current_user.last_name
         form.email.data = current_user.email
-    return render_template('updateAccount.html', form=form)
+    return render_template('account/updateAccount.html', form=form)
+
+
+@app.route('/profile/user/<user_id>', methods=['GET', 'POST'])
+@login_required
+def profileuser(user_id):
+    data = []
+    user = Users.query.get(int(user_id))
+    events = Events.query.filter_by(author=user.id).all()
+    if user.id == current_user.id:
+        return redirect(url_for('profile'))
+    else:
+        for event in events:
+            data.append({'id': event.id, "title": event.title, "date": event.date_event.strftime('%a, %b. %y'), "heure": event.time_event.strftime('%H:%M'), "lieu": event.place, "image": url_for(
+                "static", filename="thumbnails/images/{}".format(event.image)), "username": user.first_name + " " + user.last_name, "profile_image":  url_for("static", filename="/thumbnails/profile_pics/" + user.image_profile)})
+        return render_template('account/userProfile.html', title='Profile', datas=data)
 
 
 @app.route('/app/admin', methods=['GET', 'POST'])
@@ -282,3 +276,9 @@ def Admin():
         db.session.commit()
         flash(f"Votre inscription a bien été pris en compte. Vous pouvez maintenant vous connecter!", 'success')
     return render_template('admin.html', form=forms)
+
+
+@app.route('/category/', methods=['GET', 'POST'])
+@login_required
+def category():
+    return render_template('category/gastronomie.html', title='Catégories')
