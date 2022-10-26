@@ -5,6 +5,9 @@
   padding: 0;
   box-sizing: border-box;
 }
+.circle img {
+  border-radius: 100%;
+}
 
 .section-content {
   background-color: #0c1821;
@@ -17,13 +20,17 @@
   align-items: center;
   padding: 10px;
 }
-.danger,
+#danger,
 .invalid-feedback {
   color: rgb(196, 18, 18);
   font-size: 0.9rem;
 }
-.success {
-  color: rgb(5, 190, 5);
+#success {
+  color: rgb(27, 177, 27);
+  font-size: 0.9rem;
+}
+a:active {
+  text-decoration: none;
 }
 
 @media screen and (min-width: 1024px) {
@@ -376,9 +383,17 @@
     align-items: center;
     justify-content: center;
   }
+  .circle img {
+    border-radius: 100%;
+    width: 250px;
+    height: 250px;
+  }
   .event-author a,
   .event-place span {
     font-weight: 500;
+  }
+  .event-author a:hover {
+    text-decoration: underline;
   }
   .buttonEventview a button {
     width: 180px;
@@ -404,7 +419,7 @@
     justify-content: center;
   }
   .username {
-    width: 50vw;
+    width: 100%;
     color: #ffe9f3;
     font-size: 1.3rem;
     padding: 10px;
@@ -412,9 +427,10 @@
     font-weight: 500;
     display: flex;
     justify-content: center;
+    align-items: center;
   }
   .pathlink {
-    width: 50vw;
+    width: 100%;
     display: flex;
     justify-content: space-evenly;
     align-items: center;
@@ -429,7 +445,7 @@
     height: 30px;
   }
   .eventPublication {
-    width: 50vw;
+    width: 100%;
     background-color: #ffe9f3;
     height: 30vw;
     overflow-y: auto;
@@ -438,9 +454,18 @@
     display: flex;
     justify-content: center;
   }
+  .e{
+    width: 50vw;
+
+    display: flex;
+    justify-content: center;
+  }
+  .image-even img{
+    width: 40vw;
+  }
   .event-infoCarte {
     border: 1px solid black;
-    height: 30vh;
+    min-height:3vh;
     padding: 10px;
   }
   .event-carte {
@@ -493,13 +518,13 @@
     height: 42px;
     border-radius: 0.6rem;
   }
-  .submit{
+  .submit {
     display: flex;
     justify-content: center;
     align-items: center;
     margin: 10px;
   }
-  #test-button{
+  #test-button {
     width: 240px;
     background-color: #b3001b;
     height: 45px;
@@ -866,6 +891,12 @@
     align-items: center;
     justify-content: center;
   }
+    .circle img {
+  border-radius: 100%;
+  width: 250px;
+  height: 250px;
+}
+
   .event-author a,
   .event-place span {
     font-weight: 500;
@@ -967,7 +998,7 @@
     align-items: center;
     font-weight: 500;
   }
-    .editLabel {
+  .editLabel {
     color: #ffe9f3;
     margin: 8px;
   }
@@ -982,13 +1013,13 @@
     height: 42px;
     border-radius: 0.6rem;
   }
-  .submit{
+  .submit {
     display: flex;
     justify-content: center;
     align-items: center;
     margin: 10px;
   }
-  #test-button{
+  #test-button {
     width: 240px;
     background-color: #b3001b;
     height: 45px;
@@ -1313,7 +1344,7 @@
   .eventTitle {
     color: #0c1821;
     font-family: montserrat;
-    font-size: 1.6rem;
+    font-size: 1.2rem;
     margin: 4px;
     font-weight: 500;
   }
@@ -1356,6 +1387,12 @@
     align-items: center;
     justify-content: center;
   }
+  .circle img {
+  border-radius: 100%;
+  width: 140px;
+  height: 140px;
+}
+
   .event-author a,
   .event-place span {
     font-weight: 500;
@@ -1484,7 +1521,7 @@
     display: flex;
     justify-content: center;
   }
-    .editLabel {
+  .editLabel {
     color: #ffe9f3;
     margin: 8px;
     font-size: 0.8rem;
@@ -1500,13 +1537,13 @@
     height: 45px;
     border-radius: 0.6rem;
   }
-  .submit{
+  .submit {
     display: flex;
     justify-content: center;
     align-items: center;
     margin: 10px;
   }
-  #test-button{
+  #test-button {
     width: 240px;
     background-color: #b3001b;
     height: 45px;

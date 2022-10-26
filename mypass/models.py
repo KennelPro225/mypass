@@ -1,6 +1,7 @@
 from datetime import datetime
 from flask_login import UserMixin
 from mypass import db, loginManager
+from itsdangerous import Serializer
 
 
 @loginManager.user_loader
@@ -63,12 +64,12 @@ class Tickets(db.Model):
     numero_ticket = db.Column('numero_ticket', db.Integer, nullable=False)
 
 
-class Admin(db.Model, UserMixin):
+class Admin(db.Model):
     id = db.Column('id_user', db.Integer, primary_key=True)
-    last_name = db.Column('last_name', db.String(length=100), nullable=False)
-    first_name = db.Column('first_name', db.String(length=100), nullable=False)
+    prenom = db.Column('last_name', db.String(length=100), nullable=False)
+    nom = db.Column('first_name', db.String(length=100), nullable=False)
     image_profile = db.Column(
         db.String(200), nullable=False, default='default.png')
-    email = db.Column('user_email', db.String(
+    mail = db.Column('user_email', db.String(
         length=100), unique=True, nullable=False)
     password = db.Column('password', db.String(length=100), nullable=False)

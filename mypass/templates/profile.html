@@ -13,42 +13,41 @@
     </div>
 
     <div class="pathlink">
-      <a href="#"> Voir Informations Profile </a>
-      <div class="trait"></div>
-      <a href="#">Modifier Informations Profile</a>
+      <a href="{{url_for('updateAccount')}}">Modifier Informations Profile</a>
     </div>
-
     <div class="eventPublication">
-      <div>
-        {%if datas|length > 1 %}
-        <div><h1 class="label">Evènements publiés</h1></div>
-        {%elif datas|length == 0 %}
-        <div><h1 class="label">Aucune Publication</h1></div>
-        {%else%}
-        <div><h1 class="label">Evènement publié</h1></div>
-        {%endif%} {% for data in datas%}
-        <div class="event-carte">
-          <div class="image-even">
-            <img src={{ data.image }} class="image-pub" />
-          </div>
-          <div class="event-infoCarte">
-            <div class="eventTitle">{{data.title}}</div>
-            <div class="dateInf">
-              <div class="event-dae">{{data.date}}</div>
-              <div class="event-hor">{{data.heure}}</div>
+      <div class="e">
+        <div>
+          {%if datas|length > 1 %}
+          <div><h1 class="label">Evènements publiés</h1></div>
+          {%elif datas|length == 0 %}
+          <div><h1 class="label">Aucune Publication</h1></div>
+          {%else%}
+          <div><h1 class="label">Evènement publié</h1></div>
+          {%endif%} {% for data in datas%}
+          <div class="event-carte">
+            <div class="image-even">
+              <img src={{ data.image }} class="image-pub" />
             </div>
-            <div class="event-place">{{data.lieu}}</div>
-            <div class="button-profile">
-              <a href="{{url_for('editEvent',event_id=data.id)}}">
-                <button class="button_edit">Editer</button>
-              </a>
-              <a href="{{url_for('deleteEvent',event_id=data.id)}}">
-                <button class="button_delete">Supprimer</button>
-              </a>
+            <div class="event-infoCarte">
+              <div class="eventTitle">{{data.title}}</div>
+              <div class="dateInf">
+                <div class="event-dae">{{data.date}}</div>
+                <div class="event-hor">{{data.heure}}</div>
+              </div>
+              <div class="event-place">{{data.lieu}}</div>
+              <div class="button-profile">
+                <a href="{{url_for('editEvent',event_id=data.id)}}">
+                  <button class="button_edit">Editer</button>
+                </a>
+                <a href="{{url_for('deleteEvent',event_id=data.id)}}">
+                  <button class="button_delete">Supprimer</button>
+                </a>
+              </div>
             </div>
           </div>
+          {%endfor%}
         </div>
-        {%endfor%}
       </div>
     </div>
   </div>

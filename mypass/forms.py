@@ -1,9 +1,9 @@
 from flask_wtf import FlaskForm
+from flask_login import current_user
 from flask_wtf.file import FileField, FileAllowed
 from mypass.models import Users, Category, Type_Event
-from wtforms.validators import DataRequired, Email, EqualTo, ValidationError, NumberRange
+from wtforms.validators import DataRequired, Email, EqualTo, ValidationError, NumberRange, Length
 from wtforms import StringField, PasswordField, SubmitField, BooleanField, TimeField, DateField, SelectField, IntegerField
-
 
 
 class LoginForm(FlaskForm):
@@ -19,7 +19,8 @@ class RegistrationForm(FlaskForm):
     lastName = StringField('Nom', validators=[DataRequired()])
     email = StringField('Email', validators=[DataRequired(), Email(
         message='Addresse email est invalide')])
-    password = PasswordField('Mot de passe', validators=[DataRequired()])
+    password = PasswordField('Mot de passe', validators=[
+                             DataRequired(), Length(min=8, max=20)])
     cpassword = PasswordField('Confirmez Mot de passe', validators=[
         DataRequired(), EqualTo('password', message="Le mot de passe saisi n'est pas compatible.")])
     submit = SubmitField("S'inscrire")
@@ -29,6 +30,22 @@ class RegistrationForm(FlaskForm):
         if user:
             raise ValidationError(
                 'Cet Email a déjà un compte. Choisissez en un autre.')
+
+
+class UpdateAccountForm(FlaskForm):
+    firstName = StringField('Prénom(s)', validators=[DataRequired()])
+    lastName = StringField('Nom', validators=[DataRequired()])
+    email = StringField('Email', validators=[DataRequired(), Email()])
+    picture = FileField('Update Profile Picture', validators=[
+                        FileAllowed(['jpg', 'png', 'jpeg'])])
+    submit = SubmitField('Update')
+
+    def validate_email(self, email):
+        if email.data != current_user.email:
+            user = Users.query.filter_by(email= email.data).first()
+            if user:
+                raise ValidationError(
+                    'Cet Email a déjà un compte. Choisissez en un autre.')
 
 
 category = Category.query.all()
@@ -77,3 +94,15 @@ class EventViewt(FlaskForm):
 
 class Ticket(FlaskForm):
     submit = SubmitField("Je participe")
+
+
+class AdminForm(FlaskForm):
+    firstName = StringField('Prénom(s)', validators=[DataRequired()])
+    lastName = StringField('Nom', validators=[DataRequired()])
+    email = StringField('Email', validators=[DataRequired(), Email(
+        message='Addresse email est invalide')])
+    password = PasswordField('Mot de passe', validators=[
+                             DataRequired(), Length(min=8, max=20)])
+    cpassword = PasswordField('Confirmez Mot de passe', validators=[
+        DataRequired(), EqualTo('password', message="Le mot de passe saisi n'est pas compatible.")])
+    submit = SubmitField("S'inscrire")

@@ -5,18 +5,83 @@
     method="post"
     enctype="multipart/form-data"
   >
-    <div>{{form.title.label (class='editLabel')}}</div>
-    <div>{{form.title (class='edit-input')}}</div>
-    <div>{{form.date.label (class='editLabel')}}</div>
-    <div>{{form.date (class='edit-input')}}</div>
-    <div>{{form.hour.label (class='editLabel')}}</div>
-    <div>{{form.hour (class='edit-input')}}</div>
-    <div>{{form.place.label (class='editLabel')}}</div>
-    <div>{{form.place (class='edit-input')}}</div>
-    <div>{{form.seat.label (class='editLabel')}}</div>
-    <div>{{form.seat (class='edit-input')}}</div>
-    <div>{{form.image.label (class='editLabel')}}</div>
-    <div>{{form.image (class='edit-input')}}</div>
+    {{ form.hidden_tag() }}
+    <div class="title-info">
+      <div>{{form.title.label(class='edit-label')}}</div>
+      {% if form.title.errors %}
+      <div>{{form.title(class='edit-input')}}</div>
+      <div class="invalid-feedback">
+        {% for error in form.title.errors %}
+        <span>{{error}}</span>
+        {% endfor %}
+      </div>
+      {% else %}
+      <div>{{form.title(class='edit-input')}}</div>
+      {% endif %}
+    </div>
+    <div class="date-info">
+      <div>{{form.date.label(class='edit-label')}}</div>
+      {% if form.date.errors %} {{ form.date(class='edit-input') }}
+      <div class="invalid-feedback">
+        {% for error in form.date.errors %}
+        <span>{{error}}</span>
+        {% endfor %}
+      </div>
+      {% else %}
+      <div>{{form.date(class='edit-input')}}</div>
+      {% endif %}
+    </div>
+    <div class="hour-info">
+      <div>{{form.hour.label(class='edit-label')}}</div>
+      {% if form.hour.errors %} {{ form.hour(class='edit-input') }}
+      <div class="invalid-feedback">
+        {% for error in form.hour.errors %}
+        <span>{{error}}</span>
+        {% endfor %}
+      </div>
+      {% else %}
+      <div>{{form.hour(class='edit-input')}}</div>
+      {% endif %}
+    </div>
+    <div class="place-info">
+      <div>{{form.place.label(class='edit-label')}}</div>
+      {% if form.place.errors %}
+      <div>{{form.place(class='edit-input')}}</div>
+      <div class="invalid-feedback">
+        {% for error in form.place.errors %}
+        <span>{{error}}</span>
+        {% endfor %}
+      </div>
+      {% else %}
+      <div>{{form.place(class='edit-input')}}</div>
+      {% endif %}
+    </div>
+    <div class="seat-info">
+      <div>{{form.seat.label(class='edit-label')}}</div>
+      {% if form.seat.errors %}
+      <div>{{form.seat(class='edit-input')}}</div>
+      <div class="invalid-feedback">
+        {% for error in form.seat.errors %}
+        <span>{{error}}</span>
+        {% endfor %}
+      </div>
+      {% else %}
+      <div>{{form.seat(class='edit-input')}}</div>
+      {% endif %}
+    </div>
+    <div class="image-info">
+      <div>{{form.image.label(class='edit-label')}}</div>
+      {% if form.image.errors %}
+      <div>{{form.image(class='edit-input')}}</div>
+      <div class="invalid-feedback">
+        {% for error in form.image.errors %}
+        <span>{{error}}</span>
+        {% endfor %}
+      </div>
+      {% else %}
+      <div>{{form.image(class='edit-input')}}</div>
+      {% endif %}
+    </div>
 
     <div class="submit">{{form.submit (id='test-button')}}</div>
   </form>

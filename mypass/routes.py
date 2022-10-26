@@ -1,13 +1,14 @@
 import os
 import pdfkit
 import secrets
+from PIL import Image
 from random import choice
 from datetime import datetime
 from mypass import app, db, bcrypt
-from mypass.models import Category, Type_Event, Users, Events, Tickets
 from flask_login import login_user, current_user, logout_user, login_required
-from mypass.forms import EditForm, LoginForm, RegistrationForm, PostForm, EventViewt, Ticket
+from mypass.models import Category, Type_Event, Users, Events, Tickets, Admin
 from flask import Response, abort, make_response, render_template, url_for, flash, redirect, request
+from mypass.forms import EditForm, LoginForm, RegistrationForm, PostForm, EventViewt, Ticket, UpdateAccountForm, AdminForm
 
 
 @app.route('/')
@@ -26,6 +27,7 @@ def login():
         user = Users.query.filter_by(email=form.email.data).first()
         if user and bcrypt.check_password_hash(user.password, form.password.data):
             login_user(user, remember=form.remember.data)
+            flash(f"Bienvenue Sur EvenTicket!", 'success')
             return redirect(url_for('home'))
         else:
             flash(
@@ -55,7 +57,7 @@ def signUp():
                      email=form.email.data, password=hashpassword, user_id=userId)
         db.session.add(user)
         db.session.commit()
-        flash(f"Votre inscription a bien été pris en compte s'il vous plaît", 'success')
+        flash(f"Votre inscription a bien été pris en compte. Vous pouvez maintenant vous connecter!", 'success')
         return redirect(url_for('login'))
     return render_template('signUp.html', title='Inscription', form=form)
 
@@ -72,6 +74,24 @@ def save_picture(form_picture):
     picture_path = os.path.join(
         app.root_path, 'static/thumbnails/images', picture_fn)
     form_picture.save(picture_path)
+    output_size = (543, 300)
+    i = Image.open(form_picture)
+    i.thumbnail(output_size)
+    i.save(picture_path)
+    return picture_fn
+
+
+def save_profile_picture(form_picture):
+    random_hex = secrets.token_hex(8)
+    _, f_ext = os.path.splitext(form_picture.filename)
+    picture_fn = random_hex + f_ext
+    picture_path = os.path.join(
+        app.root_path, 'static/thumbnails/profile_pics', picture_fn)
+    form_picture.save(picture_path)
+    output_size = (250, 250)
+    i = Image.open(form_picture)
+    i.thumbnail(output_size)
+    i.save(picture_path)
     return picture_fn
 
 
@@ -137,13 +157,14 @@ def ticket(event_id, user_id):
     db.session.commit()
     data.append({'id': event.id, "title": event.title, "date": event.date_event.strftime('%A, %B %Y'), 'user_id': current_user.id, 'user': current_user.first_name + ' ' + current_user.last_name, "heure": event.time_event.strftime('%H:%M'), "lieu": event.place,
                  "image": url_for('static', filename='thumbnails/images/{}'.format(event.image)), 'numero_ticket': code}),
+    print(data)
     rendered = render_template('ticket.html', datas=data)
+    # path_to_file = r'C:\Program Files\wkhtmltopdf\bin\wkhtmltopdf.exe'
     config = pdfkit.configuration()
-    pdf = pdfkit.from_string(rendered, configuration=config)
+    pdf = pdfkit.from_string(rendered, False, configuration=config)
     response = make_response(pdf)
-    response.headers['Context-Type'] = 'application/pdf'
-    response.headers['Content-Disposition'] = 'attachment; filename={}-{}.pdf'.format(
-        code, current_user.user_id)
+    response.headers['Context-Type'] = 'Application/PDF'
+    response.headers['Content-Disposition'] = 'filename={}.pdf'.format(code)
     return response
 
 
@@ -166,7 +187,7 @@ def editEvent(event_id):
             event.time_event = form.hour.data
             event.place = form.place.data
             db.session.commit()
-            flash('Les modifications ont été pris en compte Merci!')
+            flash('Les modifications ont été pris en compte Merci!', 'success')
             return render_template('event.html')
         elif request.method == 'GET':
             form.title.data = event.title
@@ -219,3 +240,39 @@ def profileuser(user_id):
 @login_required
 def category():
     return render_template('category.html', title='Catégories')
+
+
+@app.route('/updateAccount', methods=['GET', 'POST'])
+@login_required
+def updateAccount():
+    form = UpdateAccountForm()
+    if form.validate_on_submit():
+        if form.picture.data:
+            picture_file = save_profile_picture(form.picture.data)
+            current_user.image_profile = picture_file
+        current_user.first_name = form.firstName.data
+        current_user.last_name = form.lastName.data
+        current_user.email = form.email.data
+        db.session.commit()
+        flash('Your account has been updated!', 'success')
+        return redirect(url_for('profile'))
+    elif request.method == 'GET':
+        form.firstName.data = current_user.first_name
+        form.lastName.data = current_user.last_name
+        form.email.data = current_user.email
+    return render_template('updateAccount.html', form=form)
+
+
+@app.route('/app/admin', methods=['GET', 'POST'])
+@login_required
+def Admin():
+    forms = AdminForm()
+    if forms.validate_on_submit():
+        hashpassword = bcrypt.generate_password_hash(
+            forms.password.data).decode('utf-8')
+        user = Admin(prenom=forms.lastName.data, nom=forms.firstName.data,
+                     mail=forms.email.data, password=hashpassword)
+        db.session.add(user)
+        db.session.commit()
+        flash(f"Votre inscription a bien été pris en compte. Vous pouvez maintenant vous connecter!", 'success')
+    return render_template('admin.html', form=forms)

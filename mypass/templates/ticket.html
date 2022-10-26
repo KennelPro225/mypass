@@ -2,9 +2,7 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>{{current_user.user_id}}</title>
+    <title>EvenTicket</title>
   </head>
 
   <body
@@ -40,7 +38,9 @@
             <h1>{{data.title}}</h1>
           </div>
           <div class="event-image">
-            <div class="simulator" style="width: 150px; height: 100px"></div>
+            <div class="simulator" style="width: 150px; height: 100px">
+              <img src="{{data.image}}" alt="" />
+            </div>
           </div>
         </div>
         <div class="event-in" style="margin-top: 15px; font-weight: 500">
