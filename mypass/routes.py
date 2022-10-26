@@ -1,5 +1,6 @@
 import os
 import pdfkit
+import sqlite3
 import secrets
 from PIL import Image
 from random import choice
@@ -9,6 +10,11 @@ from flask_login import login_user, current_user, logout_user, login_required
 from mypass.models import Category, Type_Event, Users, Events, Tickets, Admin
 from flask import Response, abort, make_response, render_template, url_for, flash, redirect, request
 from mypass.forms import EditForm, LoginForm, RegistrationForm, PostForm, EventViewt, Ticket, UpdateAccountForm, AdminForm
+
+
+def connexion():
+    con = sqlite3.connect("mypass.db")
+    return con
 
 
 @app.route('/')
