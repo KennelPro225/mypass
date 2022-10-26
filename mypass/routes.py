@@ -170,7 +170,7 @@ def ticket(event_id, user_id):
     pdf = pdfkit.from_string(rendered, False, configuration=config)
     response = make_response(pdf)
     response.headers['Context-Type'] = 'Application/PDF'
-    response.headers['Content-Disposition'] = 'filename={}.pdf'.format(code)
+    response.headers['Content-Disposition'] = 'attachment;filename={}.pdf'.format(code)
     return response
 
 
