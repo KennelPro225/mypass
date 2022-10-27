@@ -1,0 +1,26 @@
+{% extends 'layout.html' %} {% block content %}
+<div class="ken">
+  <div class="eventPost">
+    {% for data in datas%}
+    <div class="event-card">
+      <div class="image-event">
+        <img src={{ data.image }} class="image-ticket" />
+      </div>
+      <div class="event-infoCard">
+        <div class="eventTitle">{{data.title}}</div>
+        <div class="dateInfo">
+          <div class="event-date">{{data.date}}</div>
+          <div class="event-hour">{{data.heure}}</div>
+        </div>
+        <div class="event-place">{{data.lieu}}</div>
+        <div>
+          <a href="{{url_for('EventView', event_id = data.id)}}"
+            >{{button.submit}}</a
+          >
+        </div>
+      </div>
+    </div>
+    {%endfor%}
+  </div>
+</div>
+{% endblock %}

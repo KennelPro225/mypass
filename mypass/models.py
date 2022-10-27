@@ -64,7 +64,7 @@ class Tickets(db.Model):
     numero_ticket = db.Column('numero_ticket', db.Integer, nullable=False)
 
 
-class Admin(db.Model):
+class Admins(db.Model):
     id = db.Column('id_user', db.Integer, primary_key=True)
     prenom = db.Column('last_name', db.String(length=100), nullable=False)
     nom = db.Column('first_name', db.String(length=100), nullable=False)

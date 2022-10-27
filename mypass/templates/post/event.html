@@ -1,26 +1,43 @@
 {% extends 'layout.html' %} {% block content %}
-<div class="ken">
-  <div class="eventPost">
-    {% for data in datas%}
-    <div class="event-card">
-      <div class="image-event">
-        <img src={{ data.image }} class="image-ticket" />
-      </div>
-      <div class="event-infoCard">
-        <div class="eventTitle">{{data.title}}</div>
-        <div class="dateInfo">
-          <div class="event-date">{{data.date}}</div>
-          <div class="event-hour">{{data.heure}}</div>
+<div class="section-third">
+  <div class="category">
+    {%if datas|length > 1 %}
+    <h2 class="text-category" style="margin-bottom: 20px">
+      En ce moment - {{datas|length}} évènements
+    </h2>
+    {%elif datas|length == 0 %}
+    <h2 class="text-category" style="margin-bottom: 20px">
+      En ce moment - Aucun évènement
+    </h2>
+    {%else%}
+    <h2 class="text-category" style="margin-bottom: 20px">
+      En ce moment - {{datas|length}} évènement
+    </h2>
+    {%endif%}
+  </div>
+  <div class="ken">
+    <div class="eventPost">
+      {% for data in datas%}
+      <div class="event-card">
+        <div class="image-event">
+          <img src={{ data.image }} class="image-ticket" />
         </div>
-        <div class="event-place">{{data.lieu}}</div>
-        <div>
-          <a href="{{url_for('EventView', event_id = data.id)}}"
-            >{{button.submit}}</a
-          >
+        <div class="event-infoCard">
+          <div class="eventTitle">{{data.title}}</div>
+          <div class="dateInfo">
+            <div class="event-date">{{data.date}}</div>
+            <div class="event-hour">{{data.heure}}</div>
+          </div>
+          <div class="event-place">{{data.lieu}}</div>
+          <div>
+            <a href="{{url_for('EventView', event_id = data.id)}}"
+              >{{button.submit}}</a
+            >
+          </div>
         </div>
       </div>
+      {%endfor%}
     </div>
-    {%endfor%}
   </div>
 </div>
 {% endblock %}

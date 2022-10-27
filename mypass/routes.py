@@ -1,20 +1,14 @@
 import os
 import pdfkit
-import sqlite3
 import secrets
 from PIL import Image
 from random import choice
 from datetime import datetime
 from mypass import app, db, bcrypt
 from flask_login import login_user, current_user, logout_user, login_required
-from mypass.models import Category, Type_Event, Users, Events, Tickets, Admin
-from flask import Response, abort, make_response, render_template, url_for, flash, redirect, request
-from mypass.forms import EditForm, LoginForm, RegistrationForm, PostForm, EventViewt, Ticket, UpdateAccountForm, AdminForm
-
-
-def connexion():
-    con = sqlite3.connect("mypass.db")
-    return con
+from mypass.models import Category, Type_Event, Users, Events, Tickets, Admins
+from flask import Response, abort, make_response, render_template, url_for, flash, redirect, request, session
+from mypass.forms import EditForm, LoginForm, RegistrationForm, PostForm, EventViewt, Ticket, UpdateAccountForm, AdminForm, AdminLoginForm
 
 
 @app.route('/')
@@ -126,10 +120,12 @@ def createEvent():
 def Event():
     button = EventViewt()
     data = []
-    events = Events.query.all()
+    events = Events.query.order_by(Events.date_event.asc()).all()
     for event in events:
         data.append({'id': event.id, "title": event.title, "date": event.date_event.strftime('%A, %d %B %Y'), "heure": event.time_event.strftime('%H:%M'), "lieu": event.place,
                     "image": url_for('static', filename='thumbnails/images/{}'.format(event.image))}),
+
+    print(data)
     return render_template('post/event.html', datas=data, button=button, title="Plus d'évènements")
 
 
@@ -137,7 +133,7 @@ def Event():
 def EventView(event_id):
     data = []
     button = Ticket()
-    event = Events.query.get(event_id)
+    event = Events.query.order_by(Events.date_event.asc()).get(event_id)
     # event = Events.query.filter_by(id=event_id).all()
     author = Users.query.get(event.author)
     data.append({'id': event.id, "title": event.title, "date": event.date_event.strftime('%a, %d %B %Y'), 'author_id': event.author, 'author': author.first_name + ' ' + author.last_name, "heure": event.time_event.strftime('%H:%M'), "lieu": event.place,
@@ -151,7 +147,7 @@ def ticket(event_id, user_id):
     number = range(2999999929, 10000000000, 1)
     code = choice(number)
     data = []
-    event = Events.query.get(event_id)
+    event = Events.query.order_by(Events.date_event.asc()).get(event_id)
     current_user.id = user_id
     a = 1
     b = current_user.id
@@ -177,7 +173,7 @@ def ticket(event_id, user_id):
 @login_required
 def editEvent(event_id):
     form = EditForm()
-    event = Events.query.get(event_id)
+    event = Events.query.order_by(Events.date_event.asc()).get(event_id)
 
     if event.author != current_user.id:
         abort(403)
@@ -207,7 +203,7 @@ def editEvent(event_id):
 @app.route('/delete_event/<event_id>', methods=['GET', 'POST'])
 @login_required
 def deleteEvent(event_id):
-    event = Events.query.get(event_id)
+    event = Events.query.order_by(Events.date_event.asc()).get(event_id)
     db.session.delete(event)
     db.session.commit()
     return redirect(url_for('profile', event_id=event.id))
@@ -219,7 +215,8 @@ def profile():
     data = []
     image_file = url_for(
         'static', filename='/thumbnails/profile_pics/' + current_user.image_profile)
-    events = Events.query.filter_by(author=current_user.id).all()
+    events = Events.query.order_by(Events.date_event.asc()).filter_by(
+        author=current_user.id).all()
     for event in events:
         data.append({'id': event.id, "title": event.title, "date": event.date_event.strftime('%a, %b. %y'), "heure": event.time_event.strftime('%H:%M'), "lieu": event.place,
                     "image": url_for('static', filename='thumbnails/images/{}'.format(event.image))})
@@ -252,7 +249,8 @@ def updateAccount():
 def profileuser(user_id):
     data = []
     user = Users.query.get(int(user_id))
-    events = Events.query.filter_by(author=user.id).all()
+    events = Events.query.order_by(
+        Events.date_event.asc()).filter_by(author=user.id).all()
     if user.id == current_user.id:
         return redirect(url_for('profile'))
     else:
@@ -262,22 +260,163 @@ def profileuser(user_id):
         return render_template('account/userProfile.html', title='Profile', datas=data)
 
 
-@app.route('/app/admin', methods=['GET', 'POST'])
-@login_required
-def Admin():
-    forms = AdminForm()
-    if forms.validate_on_submit():
+@app.route('/app/adminLogin', methods=['GET', 'POST'])
+def adminLogin():
+    form = AdminLoginForm()
+    if form.validate_on_submit():
+        admin = Admins.query.filter_by(mail=form.email.data)
+        if admin and bcrypt.check_password_hash(admin.password, form.password.data):
+            flash(f"Bienvenue Sur EvenTicket!", 'success')
+            session['adminView']
+            return redirect(url_for('home'))
+        else:
+            flash("Erreur lors de la connexions, verifez si le mot de passe et l'email sont correctes ", 'danger')
+    return render_template('administration/adminLogin.html', form=form)
+
+
+@app.route('/app/adminSignup', methods=['GET', 'POST'])
+def adminSignUp():
+    form = AdminForm()
+    if form.validate_on_submit():
         hashpassword = bcrypt.generate_password_hash(
-            forms.password.data).decode('utf-8')
-        user = Admin(prenom=forms.lastName.data, nom=forms.firstName.data,
-                     mail=forms.email.data, password=hashpassword)
-        db.session.add(user)
-        db.session.commit()
+                form.password.data).decode('utf-8')
+        # db.session.add(user)
+        # db.session.commit()
         flash(f"Votre inscription a bien été pris en compte. Vous pouvez maintenant vous connecter!", 'success')
-    return render_template('admin.html', form=forms)
+        return redirect(url_for('login'))
+    return render_template('administration/adminLogin.html', form=form)
 
 
-@app.route('/category/', methods=['GET', 'POST'])
+@app.route('/app/adminView', methods=['GET', 'POST'])
+def adminView():
+    pass
+
+
+@app.route('/category/affaire/', methods=['GET', 'POST'])
 @login_required
-def category():
-    return render_template('category/gastronomie.html', title='Catégories')
+def affaire():
+    button = EventViewt()
+    data = []
+    events = Events.query.order_by(
+        Events.date_event.asc()).filter_by(category=9).all()
+    for event in events:
+        data.append({'id': event.id, "title": event.title, "date": event.date_event.strftime('%A, %d %B %Y'), "heure": event.time_event.strftime('%H:%M'), "lieu": event.place,
+                    "image": url_for('static', filename='thumbnails/images/{}'.format(event.image))}),
+    return render_template('category/affaire.html', title='Catégories', datas=data, button=button)
+
+
+@app.route('/category/art_du_spetacle/', methods=['GET', 'POST'])
+@login_required
+def art_du_spectacle():
+    button = EventViewt()
+    data = []
+    events = Events.query.order_by(
+        Events.date_event.asc()).filter_by(category=8).all()
+    for event in events:
+        data.append({'id': event.id, "title": event.title, "date": event.date_event.strftime('%A, %d %B %Y'), "heure": event.time_event.strftime('%H:%M'), "lieu": event.place,
+                    "image": url_for('static', filename='thumbnails/images/{}'.format(event.image))}),
+    return render_template('category/art_du_spetacle.html', title='Catégories', datas=data, button=button)
+
+
+@app.route('/category/education/', methods=['GET', 'POST'])
+@login_required
+def education():
+    button = EventViewt()
+    data = []
+    events = Events.query.order_by(
+        Events.date_event.asc()).filter_by(category=5).all()
+    for event in events:
+        data.append({'id': event.id, "title": event.title, "date": event.date_event.strftime('%A, %d %B %Y'), "heure": event.time_event.strftime('%H:%M'), "lieu": event.place,
+                    "image": url_for('static', filename='thumbnails/images/{}'.format(event.image))}),
+    return render_template('category/education.html', title='Catégories', datas=data, button=button)
+
+
+@app.route('/category/environnement/', methods=['GET', 'POST'])
+@login_required
+def environnement():
+    button = EventViewt()
+    data = []
+    events = Events.query.order_by(
+        Events.date_event.asc()).filter_by(category=3).all()
+    for event in events:
+        data.append({'id': event.id, "title": event.title, "date": event.date_event.strftime('%A, %d %B %Y'), "heure": event.time_event.strftime('%H:%M'), "lieu": event.place,
+                    "image": url_for('static', filename='thumbnails/images/{}'.format(event.image))}),
+    return render_template('category/environnement.html', title='Catégories', datas=data, button=button)
+
+
+@app.route('/category/formation/', methods=['GET', 'POST'])
+@login_required
+def formation():
+    button = EventViewt()
+    data = []
+    events = Events.query.order_by(
+        Events.date_event.asc()).filter_by(category=6).all()
+    for event in events:
+        data.append({'id': event.id, "title": event.title, "date": event.date_event.strftime('%A, %d %B %Y'), "heure": event.time_event.strftime('%H:%M'), "lieu": event.place,
+                    "image": url_for('static', filename='thumbnails/images/{}'.format(event.image))}),
+    return render_template('category/formation.html', title='Catégories', datas=data, button=button)
+
+
+@app.route('/category/gastronomie/', methods=['GET', 'POST'])
+@login_required
+def gastronomie():
+    button = EventViewt()
+    data = []
+    events = Events.query.order_by(
+        Events.date_event.asc()).filter_by(category=1).all()
+    for event in events:
+        data.append({'id': event.id, "title": event.title, "date": event.date_event.strftime('%A, %d %B %Y'), "heure": event.time_event.strftime('%H:%M'), "lieu": event.place,
+                    "image": url_for('static', filename='thumbnails/images/{}'.format(event.image))}),
+    return render_template('category/gastronomie.html', title='Catégories', datas=data, button=button)
+
+
+@app.route('/category/loisirs/', methods=['GET', 'POST'])
+@login_required
+def loisirs():
+    button = EventViewt()
+    data = []
+    events = Events.query.order_by(
+        Events.date_event.asc()).filter_by(category=10).all()
+    for event in events:
+        data.append({'id': event.id, "title": event.title, "date": event.date_event.strftime('%A, %d %B %Y'), "heure": event.time_event.strftime('%H:%M'), "lieu": event.place,
+                    "image": url_for('static', filename='thumbnails/images/{}'.format(event.image))}),
+    return render_template('category/loisirs.html', title='Catégories', datas=data, button=button)
+
+
+@app.route('/category/musique/', methods=['GET', 'POST'])
+@login_required
+def musique():
+    button = EventViewt()
+    data = []
+    events = Events.query.order_by(
+        Events.date_event.asc()).filter_by(category=4).all()
+    for event in events:
+        data.append({'id': event.id, "title": event.title, "date": event.date_event.strftime('%A, %d %B %Y'), "heure": event.time_event.strftime('%H:%M'), "lieu": event.place,
+                    "image": url_for('static', filename='thumbnails/images/{}'.format(event.image))}),
+    return render_template('category/musique.html', title='Catégories', datas=data, button=button)
+
+
+@app.route('/category/sport/', methods=['GET', 'POST'])
+@login_required
+def sport():
+    button = EventViewt()
+    data = []
+    events = Events.query.order_by(
+        Events.date_event.asc()).filter_by(category=2).all()
+    for event in events:
+        data.append({'id': event.id, "title": event.title, "date": event.date_event.strftime('%A, %d %B %Y'), "heure": event.time_event.strftime('%H:%M'), "lieu": event.place,
+                    "image": url_for('static', filename='thumbnails/images/{}'.format(event.image))}),
+    return render_template('category/sport.html', title='Catégories', datas=data, button=button)
+
+
+@app.route('/category/voyages/', methods=['GET', 'POST'])
+@login_required
+def voyages():
+    button = EventViewt()
+    data = []
+    events = Events.query.order_by(
+        Events.date_event.asc()).filter_by(category=7).all()
+    for event in events:
+        data.append({'id': event.id, "title": event.title, "date": event.date_event.strftime('%A, %d %B %Y'), "heure": event.time_event.strftime('%H:%M'), "lieu": event.place,
+                    "image": url_for('static', filename='thumbnails/images/{}'.format(event.image))}),
+    return render_template('category/voyages.html', title='Catégories', datas=data, button=button)

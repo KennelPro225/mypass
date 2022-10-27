@@ -106,3 +106,10 @@ class AdminForm(FlaskForm):
     cpassword = PasswordField('Confirmez Mot de passe', validators=[
         DataRequired(), EqualTo('password', message="Le mot de passe saisi n'est pas compatible.")])
     submit = SubmitField("S'inscrire")
+
+class AdminLoginForm(FlaskForm):
+    email = StringField('Email', validators=[DataRequired(), Email(
+        message='Addresse email est invalide')])
+    password = PasswordField('Mot de passe', validators=[
+                             DataRequired(), Length(min=8, max=20)])
+    submit = SubmitField("S'inscrire")
