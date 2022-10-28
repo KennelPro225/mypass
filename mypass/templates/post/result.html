@@ -1,0 +1,12 @@
+{% extends 'layout.html' %} {% block content %}
+<div class="bge">
+  <div>
+    <h1>Verification du code</h1>
+    {% if ticket|length >0 %}
+    <h1 class="Resultat" id="">ticket validé</h1>
+    {% else%}
+    <h1 class="Resultat" id="">no valide</h1>
+    {%endif%}
+  </div>
+</div>
+{% endblock content %}

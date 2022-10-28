@@ -1,4 +1,5 @@
 import os
+from unittest import result
 import pdfkit
 import secrets
 from PIL import Image
@@ -8,7 +9,7 @@ from mypass import app, db, bcrypt
 from flask_login import login_user, current_user, logout_user, login_required
 from mypass.models import Category, Type_Event, Users, Events, Tickets, Admins
 from flask import Response, abort, make_response, render_template, url_for, flash, redirect, request, session
-from mypass.forms import EditForm, LoginForm, RegistrationForm, PostForm, EventViewt, Ticket, UpdateAccountForm, AdminForm, AdminLoginForm
+from mypass.forms import EditForm, LoginForm, RegistrationForm, PostForm, EventViewt, Ticket, UpdateAccountForm, AdminForm, AdminLoginForm, Checker
 
 
 @app.route('/')
@@ -204,6 +205,8 @@ def editEvent(event_id):
 @login_required
 def deleteEvent(event_id):
     event = Events.query.order_by(Events.date_event.asc()).get(event_id)
+    ticket = Tickets.query.filter_by(event=event_id)
+    db.session.delete(ticket)
     db.session.delete(event)
     db.session.commit()
     return redirect(url_for('profile', event_id=event.id))
@@ -270,7 +273,8 @@ def adminLogin():
             session['adminView']
             return redirect(url_for('home'))
         else:
-            flash("Erreur lors de la connexions, verifez si le mot de passe et l'email sont correctes ", 'danger')
+            flash(
+                "Erreur lors de la connexions, verifez si le mot de passe et l'email sont correctes ", 'danger')
     return render_template('administration/adminLogin.html', form=form)
 
 
@@ -279,7 +283,7 @@ def adminSignUp():
     form = AdminForm()
     if form.validate_on_submit():
         hashpassword = bcrypt.generate_password_hash(
-                form.password.data).decode('utf-8')
+            form.password.data).decode('utf-8')
         # db.session.add(user)
         # db.session.commit()
         flash(f"Votre inscription a bien été pris en compte. Vous pouvez maintenant vous connecter!", 'success')
@@ -420,3 +424,12 @@ def voyages():
         data.append({'id': event.id, "title": event.title, "date": event.date_event.strftime('%A, %d %B %Y'), "heure": event.time_event.strftime('%H:%M'), "lieu": event.place,
                     "image": url_for('static', filename='thumbnails/images/{}'.format(event.image))}),
     return render_template('category/voyages.html', title='Catégories', datas=data, button=button)
+
+
+@app.route('/checkTickets', methods=['GET', 'POST'])
+def checker():
+    form = Checker()
+    if form.is_submitted():
+        ticket = Tickets.query.filter_by(numero_ticket=int(form.numero.data)).all()
+        return render_template('/post/result.html', ticket=ticket)
+    return render_template('/post/ticketChecker.html', form=form)

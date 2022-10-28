@@ -42,7 +42,7 @@ class UpdateAccountForm(FlaskForm):
 
     def validate_email(self, email):
         if email.data != current_user.email:
-            user = Users.query.filter_by(email= email.data).first()
+            user = Users.query.filter_by(email=email.data).first()
             if user:
                 raise ValidationError(
                     'Cet Email a déjà un compte. Choisissez en un autre.')
@@ -107,9 +107,15 @@ class AdminForm(FlaskForm):
         DataRequired(), EqualTo('password', message="Le mot de passe saisi n'est pas compatible.")])
     submit = SubmitField("S'inscrire")
 
+
 class AdminLoginForm(FlaskForm):
     email = StringField('Email', validators=[DataRequired(), Email(
         message='Addresse email est invalide')])
     password = PasswordField('Mot de passe', validators=[
                              DataRequired(), Length(min=8, max=20)])
     submit = SubmitField("S'inscrire")
+
+
+class Checker(FlaskForm):
+    numero = StringField('Numéro de tickets', validators=[DataRequired()])
+    submit = SubmitField("Vérifier")
