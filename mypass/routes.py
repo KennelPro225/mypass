@@ -126,7 +126,6 @@ def Event():
         data.append({'id': event.id, "title": event.title, "date": event.date_event.strftime('%A, %d %B %Y'), "heure": event.time_event.strftime('%H:%M'), "lieu": event.place,
                     "image": url_for('static', filename='thumbnails/images/{}'.format(event.image))}),
 
-    print(data)
     return render_template('post/event.html', datas=data, button=button, title="Plus d'évènements")
 
 
@@ -160,8 +159,8 @@ def ticket(event_id, user_id):
     data.append({'id': event.id, "title": event.title, "date": event.date_event.strftime('%a, %d %B %Y'), 'user_id': current_user.id, 'user': current_user.first_name + ' ' + current_user.last_name, "heure": event.time_event.strftime('%H:%M'), "lieu": event.place,
                  "image": "file:///mypass/{}".format(url_for('static', filename='thumbnails/images/{}'.format(event.image))), 'numero_ticket': code}),
     rendered = render_template('post/ticket.html', datas=data)
-    # path_to_file = r'C:\Program Files\wkhtmltopdf\bin\wkhtmltopdf.exe'
-    config = pdfkit.configuration()
+    path_to_file = r'C:\Program Files\wkhtmltopdf\bin\wkhtmltopdf.exe'
+    config = pdfkit.configuration(wkhtmltopdf=path_to_file)
     pdf = pdfkit.from_string(rendered, False, configuration=config)
     response = make_response(pdf)
     response.headers['Context-Type'] = 'Application/PDF'
@@ -212,7 +211,6 @@ def editEvent(event_id):
 def deleteEvent(event_id):
     event = Events.query.order_by(Events.date_event.asc()).get(event_id)
     ticket = Tickets.query.filter_by(event=event_id)
-    db.session.delete(ticket)
     db.session.delete(event)
     db.session.commit()
     return redirect(url_for('profile', event_id=event.id))
@@ -442,6 +440,5 @@ def checker(event_id):
             numero_ticket=int(form.numero.data),event=event_id).all()
         for ticket in tickets:
             data.append({'numero_ticket': ticket.numero_ticket,'event':ticket.event})
-            print(data)
         return render_template('/post/result.html', tickets=data)
     return render_template('/post/ticketChecker.html', form=form)
