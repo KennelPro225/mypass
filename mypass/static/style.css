@@ -1647,7 +1647,7 @@ a:active {
   .button_edit {
     background-color: rgb(5, 163, 5);
     height: 40px;
-    width: 110px;
+    width: 90px;
     border-radius: 0.5rem;
     color: #ffe9f3;
     font-size: 0.9rem;
@@ -1658,7 +1658,7 @@ a:active {
     align-items: center;
   }
   .button_delete {
-    width: 110px;
+    width: 90px;
     background-color: #b3001b;
     height: 40px;
     border-radius: 0.5rem;
@@ -1779,8 +1779,9 @@ a:active {
   .button_check {
     background-color: #0c1821;
     color: #ffe9f3;
-    width: 110px;
+    width: 90px;
     height: 40px;
     border-radius: 0.4rem;
+    font-size: 0.8rem;
   }
 }
