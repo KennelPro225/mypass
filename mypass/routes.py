@@ -426,10 +426,16 @@ def voyages():
     return render_template('category/voyages.html', title='Catégories', datas=data, button=button)
 
 
-@app.route('/checkTickets', methods=['GET', 'POST'])
-def checker():
+@app.route('/checkTickets/<event_id>', methods=['GET', 'POST'])
+@login_required
+def checker(event_id):
     form = Checker()
+    data = []
     if form.is_submitted():
-        ticket = Tickets.query.filter_by(numero_ticket=int(form.numero.data)).all()
-        return render_template('/post/result.html', ticket=ticket)
+        tickets = Tickets.query.filter_by(
+            numero_ticket=int(form.numero.data),event=event_id).all()
+        for ticket in tickets:
+            data.append({'numero_ticket': ticket.numero_ticket,'event':ticket.event})
+            print(data)
+        return render_template('/post/result.html', tickets=data)
     return render_template('/post/ticketChecker.html', form=form)

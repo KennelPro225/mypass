@@ -1,12 +1,23 @@
 {% extends 'layout.html' %} {% block content %}
-<div class="bge">
-  <div>
-    <h1>Verification du code</h1>
-    {% if ticket|length >0 %}
-    <h1 class="Resultat" id="">ticket validé</h1>
-    {% else%}
-    <h1 class="Resultat" id="">no valide</h1>
-    {%endif%}
+<div class="src">
+  <div class="bge">
+    <div class="form">
+      {% if tickets|length >0 %}
+      <h1 class="Resultat" id="">
+        {%for ticket in tickets%} Le ticket N°{{ticket.numero_ticket}} est Valide
+        {%endfor%}
+      </h1>
+      {% else%}
+      <h1 class="Resultat" id="">Ticket pas valide</h1>
+      {%endif%}
+      <div class="center">
+        {%for tick in tickets%}
+        <a href="{{url_for('checker',event_id=tick.event)}}">
+          <button class="submit">Vérifier un autre ticket</button>
+        </a>
+        {%endfor%}
+      </div>
+    </div>
   </div>
 </div>
 {% endblock content %}
