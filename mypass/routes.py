@@ -160,7 +160,7 @@ def ticket(event_id, user_id):
                  "image": "file:///mypass/{}".format(url_for('static', filename='thumbnails/images/{}'.format(event.image))), 'numero_ticket': code}),
     rendered = render_template('post/ticket.html', datas=data)
     # path_to_file = r'C:\Program Files\wkhtmltopdf\bin\wkhtmltopdf.exe'
-    config = pdfkit.configuration(wkhtmltopdf)
+    config = pdfkit.configuration()
     pdf = pdfkit.from_string(rendered, False, configuration=config)
     response = make_response(pdf)
     response.headers['Context-Type'] = 'Application/PDF'
