@@ -548,7 +548,7 @@ a:active {
     justify-content: center;
     padding: 85px;
   }
-  .form {
+  .forme {
     border: 1px solid #ffe9f3;
     padding: 20px;
     width: 45vw;
@@ -1118,7 +1118,7 @@ a:active {
     justify-content: center;
     padding: 85px;
   }
-  .form {
+  .forme {
     border: 1px solid #ffe9f3;
     padding: 20px;
     width: 90vw;
@@ -1331,7 +1331,7 @@ a:active {
     background-color: #d9d9d9;
     border-radius: 0.6rem;
   }
-  .form {
+  .forme {
     display: flex;
     justify-content: center;
   }
@@ -1716,7 +1716,7 @@ a:active {
     align-items: center;
     justify-content: center;
   }
-  .form {
+  .forme {
     border: 1px solid #ffe9f3;
     padding: 10px;
     width: 98vw;
