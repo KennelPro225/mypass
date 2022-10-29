@@ -4,3 +4,5 @@ categories.txt
 color.txt
 mypass/test.py
 mypass/mypass.db
+mypass/static/thumbnails/images
+mypass/static/thumbnails/profile_pics
