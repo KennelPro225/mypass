@@ -1103,6 +1103,81 @@ a:active {
     font-family: montserrat;
     border-radius: 0.6rem;
   }
+  .src {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #0c1821;
+    padding: 80px;
+  }
+  .bge {
+    width: 100%;
+    height: 40vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 85px;
+  }
+  .form {
+    border: 1px solid #ffe9f3;
+    padding: 20px;
+    width: 90vw;
+    height: 38vh;
+    border-radius: 0.4rem;
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+  }
+  .check-input {
+    background-color: #d9d9d9;
+    height: 50px;
+    width: 75vw;
+    border-radius: 0.6rem;
+    outline: none;
+    border: none;
+  }
+  input[type="submit"] {
+    width: 80px;
+    margin: 5px;
+    height: 35px;
+    border-radius: 0.4rem;
+    border: none;
+    background-color: #b3001b;
+    color: #ffe9f3;
+    font-family: montserrat;
+    font-weight: bold;
+    display: flex;
+    justify-content: center;
+  }
+  .checkTitle,.Resultat {
+    display: flex;
+    justify-content: center;
+    color: #ffe9f3;
+    font-family: montserrat;
+    font-size: 1.5rem;
+    font-weight: bold;
+    letter-spacing: 1px;
+    margin: 15px;
+  }
+  .numero_label,.edit-label{
+    color: #ffe9f3;
+  }
+  .submit{
+    color: #ffe9f3;
+    background-color: #b3001b;
+    width: 185px;
+    height: 40px;
+    border-radius: 0.5rem;
+    font-family: montserrat;
+    padding: 2px;
+  }
+  .button_check{
+    background-color: #0c1821;
+    color: #ffe9f3;
+    width: 120px;
+    height: 40px;
+    border-radius: 0.4rem;
+  }
 }
 
 /* 
@@ -1567,8 +1642,8 @@ a:active {
   }
   .button_edit {
     background-color: rgb(5, 163, 5);
-    padding: 4px;
-    width: 90px;
+    height: 40px;
+    width: 110px;
     border-radius: 0.5rem;
     color: #ffe9f3;
     font-size: 0.9rem;
@@ -1579,9 +1654,9 @@ a:active {
     align-items: center;
   }
   .button_delete {
-    width: 90px;
+    width: 110px;
     background-color: #b3001b;
-    padding: 4px;
+    height: 40px;
     border-radius: 0.5rem;
     color: #ffe9f3;
     font-size: 0.9rem;
@@ -1626,5 +1701,80 @@ a:active {
     color: #ffe9f3;
     font-family: montserrat;
     border-radius: 0.6rem;
+  }
+  .src {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #0c1821;
+    padding: 80px;
+  }
+  .bge {
+    width: 100%;
+    min-height: 40vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .form {
+    border: 1px solid #ffe9f3;
+    padding: 10px;
+    width: 98vw;
+    min-height: 38vh;
+    border-radius: 0.4rem;
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+  }
+  .check-input {
+    background-color: #d9d9d9;
+    height: 50px;
+    width: 80vw;
+    border-radius: 0.6rem;
+    outline: none;
+    border: none;
+  }
+  input[type="submit"] {
+    width: 80px;
+    margin: 5px;
+    height: 35px;
+    border-radius: 0.4rem;
+    border: none;
+    background-color: #b3001b;
+    color: #ffe9f3;
+    font-family: montserrat;
+    font-weight: bold;
+    display: flex;
+    justify-content: center;
+  }
+  .checkTitle,.Resultat {
+    display: flex;
+    justify-content: center;
+    color: #ffe9f3;
+    font-family: montserrat;
+    font-size: 1.5rem;
+    font-weight: bold;
+    letter-spacing: 1px;
+    margin: 15px;
+    width: 80vw;
+  }
+  .numero_label,.edit-label{
+    color: #ffe9f3;
+  }
+  .submit{
+    color: #ffe9f3;
+    background-color: #b3001b;
+    width: 185px;
+    height: 40px;
+    border-radius: 0.5rem;
+    font-family: montserrat;
+    padding: 2px;
+  }
+  .button_check{
+    background-color: #0c1821;
+    color: #ffe9f3;
+    width: 110px;
+    height: 40px;
+    border-radius: 0.4rem;
   }
 }
