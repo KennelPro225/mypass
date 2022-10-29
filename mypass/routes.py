@@ -159,8 +159,8 @@ def ticket(event_id, user_id):
     data.append({'id': event.id, "title": event.title, "date": event.date_event.strftime('%a, %d %B %Y'), 'user_id': current_user.id, 'user': current_user.first_name + ' ' + current_user.last_name, "heure": event.time_event.strftime('%H:%M'), "lieu": event.place,
                  "image": "file:///mypass/{}".format(url_for('static', filename='thumbnails/images/{}'.format(event.image))), 'numero_ticket': code}),
     rendered = render_template('post/ticket.html', datas=data)
-    path_to_file = r'C:\Program Files\wkhtmltopdf\bin\wkhtmltopdf.exe'
-    config = pdfkit.configuration(wkhtmltopdf=path_to_file)
+    # path_to_file = r'C:\Program Files\wkhtmltopdf\bin\wkhtmltopdf.exe'
+    config = pdfkit.configuration()
     pdf = pdfkit.from_string(rendered, False, configuration=config)
     response = make_response(pdf)
     response.headers['Context-Type'] = 'Application/PDF'
