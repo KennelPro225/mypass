@@ -180,6 +180,7 @@ def editEvent(event_id):
         abort(403)
     else:
         if form.is_submitted():
+            button = EventViewt()
             if form.image.data:
                 picture_file = save_picture(form.image.data)
                 event.image = picture_file
@@ -190,7 +191,12 @@ def editEvent(event_id):
             event.place = form.place.data
             db.session.commit()
             flash('Les modifications ont été pris en compte Merci!', 'success')
-            return render_template('event.html')
+            data = []
+            events = Events.query.order_by(Events.date_event.asc()).all()
+            for event in events:
+                data.append({'id': event.id, "title": event.title, "date": event.date_event.strftime('%A, %d %B %Y'), "heure": event.time_event.strftime('%H:%M'), "lieu": event.place,
+                        "image": url_for('static', filename='thumbnails/images/{}'.format(event.image))}),
+            return render_template('post/event.html', datas=data, button=button, title="Plus d'évènements")
         elif request.method == 'GET':
             form.title.data = event.title
             form.seat.data = event.seat
