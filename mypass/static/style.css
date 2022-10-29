@@ -561,7 +561,7 @@ a:active {
   .check-input {
     background-color: #d9d9d9;
     height: 50px;
-    width: 25vw;
+    width: 100%;
     border-radius: 0.6rem;
     outline: none;
     border: none;
