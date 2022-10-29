@@ -589,9 +589,7 @@ a:active {
     letter-spacing: 1px;
     margin: 15px;
   }
-  .numero_label{
-    margin: 0;
-    padding: 0;
+  .numero_label,.edit-label{
     color: #ffe9f3;
   }
   .submit{
@@ -602,6 +600,13 @@ a:active {
     border-radius: 0.5rem;
     font-family: montserrat;
     padding: 2px;
+  }
+  .button_check{
+    background-color: #0c1821;
+    color: #ffe9f3;
+    width: 120px;
+    height: 40px;
+    border-radius: 0.4rem;
   }
 }
 

@@ -37,11 +37,11 @@
               </div>
               <div class="event-place">{{data.lieu}}</div>
               <div class="button-profile">
+                <a href="{{url_for('checker',event_id=data.id)}}">
+                  <button class="button_check">Verifier Ticket</button>
+                </a>
                 <a href="{{url_for('editEvent',event_id=data.id)}}">
                   <button class="button_edit">Editer</button>
-                </a>
-                <a href="{{url_for('checker',event_id=data.id)}}">
-                  <button class="button_edit">Verifier Ticket</button>
                 </a>
                 <a href="{{url_for('deleteEvent',event_id=data.id)}}">
                   <button class="button_delete">Supprimer</button>

@@ -2,12 +2,11 @@
 <div class="src">
   <div class="bge">
     <div class="form">
-      {% if tickets|length >0 %}
+      {% if tickets|length >0 %} {%for ticket in tickets%}
       <h1 class="Resultat" id="">
-        {%for ticket in tickets%} Le ticket N°{{ticket.numero_ticket}} est Valide
-        {%endfor%}
+        Le ticket N°{{ticket.numero_ticket}} est Valide
       </h1>
-      {% else%}
+      {%endfor%} {% else%}
       <h1 class="Resultat" id="">Ticket pas valide</h1>
       {%endif%}
       <div class="center">
