@@ -8,8 +8,13 @@
     <div class="event-infoCard">
       <div class="eventTitle"><span>Titre:</span> {{data.title}}</div>
       <div class="dateInfo">
-        <div class="event-date"><span>Date et Heure:</span> {{data.date}}</div>
+        <div class="event-date"><span>Date et Heure:</span> {{data.date.strftime('%a, %d %B %Y')}}</div>
         <div class="event-hour">{{data.heure}}</div>
+        {%if data.remains < 0 %}
+           <h1 id="checkAvailable">Available</h1>
+        {%else%}
+          <h1 id="checkAvailable">Unavailable</h1>
+        {%endif%}
       </div>
       <div class="event-place">Lieu: <span>{{data.lieu}}</span> </div>
       <div class="event-author"> Auteur: 
@@ -19,12 +24,21 @@
       </div>
       <divc class="buttonEventview">
           <a
+          
             href="{{url_for('ticket', event_id=data.id, user_id=current_user.id)}}"
-            ><button>Je prends mon ticket</button></a
+            ><button id="successButton">Je prends mon ticket</button></a
           >
       </div>
     </div>
   </div>
   {%endfor%}
 </div>
+<script>
+ let variable = document.querySelector('#checkAvailable')
+ var button = document.querySelector('#successButton')
+ if (variable.textContent==='Unavailable'){
+    button.disabled =button
+ }
+console.log(variable.textContent)
+</script>
 {% endblock %}

@@ -27,6 +27,11 @@
           <div class="dateInfo">
             <div class="event-date">{{data.date}}</div>
             <div class="event-hour">{{data.heure}}</div>
+            {%if data.remains < 0 %}
+            <h1 id="checkAvailable">Available</h1>
+            {%else%}
+            <h1 id="checkAvailable">Unavailable</h1>
+            {%endif%}
           </div>
           <div class="event-place">{{data.lieu}}</div>
           <div>

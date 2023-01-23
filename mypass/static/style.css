@@ -345,6 +345,10 @@ a:active {
     font-size: 1.6rem;
     margin: 4px;
     font-weight: 500;
+    display:-webkit-box ;
+    -webkit-line-clamp:1;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
   }
   .event-place {
     color: #0c1821;

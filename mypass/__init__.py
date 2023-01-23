@@ -11,4 +11,5 @@ loginManager.login_view = 'login'
 bcrypt = Bcrypt(app)
 db = SQLAlchemy(app)
 
+
 from mypass import routes

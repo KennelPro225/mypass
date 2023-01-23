@@ -1,5 +1,4 @@
 import os
-from unittest import result
 import pdfkit
 import secrets
 from PIL import Image
@@ -124,7 +123,7 @@ def Event():
     events = Events.query.order_by(Events.date_event.asc()).all()
     for event in events:
         data.append({'id': event.id, "title": event.title, "date": event.date_event.strftime('%A, %d %B %Y'), "heure": event.time_event.strftime('%H:%M'), "lieu": event.place,
-                    "image": url_for('static', filename='thumbnails/images/{}'.format(event.image))}),
+                    "image": url_for('static', filename='thumbnails/images/{}'.format(event.image)), 'remains': int((datetime.today() - event.date_event).days)}),
 
     return render_template('post/event.html', datas=data, button=button, title="Plus d'évènements")
 
@@ -136,8 +135,8 @@ def EventView(event_id):
     event = Events.query.order_by(Events.date_event.asc()).get(event_id)
     # event = Events.query.filter_by(id=event_id).all()
     author = Users.query.get(event.author)
-    data.append({'id': event.id, "title": event.title, "date": event.date_event.strftime('%a, %d %B %Y'), 'author_id': event.author, 'author': author.first_name + ' ' + author.last_name, "heure": event.time_event.strftime('%H:%M'), "lieu": event.place,
-                 "image": url_for('static', filename='thumbnails/images/{}'.format(event.image))}),
+    data.append({'id': event.id, "title": event.title, "date":event.date_event, 'author_id': event.author, 'author': author.first_name + ' ' + author.last_name, "heure": event.time_event.strftime('%H:%M'), "lieu": event.place,
+                 "image": url_for('static', filename='thumbnails/images/{}'.format(event.image)), 'remains': int((datetime.today() - event.date_event).days)}),
     return render_template('post/eventview.html', datas=data, button=button, title='Prendre sont ticket')
 
 
@@ -159,13 +158,14 @@ def ticket(event_id, user_id):
     data.append({'id': event.id, "title": event.title, "date": event.date_event.strftime('%a, %d %B %Y'), 'user_id': current_user.id, 'user': current_user.first_name + ' ' + current_user.last_name, "heure": event.time_event.strftime('%H:%M'), "lieu": event.place,
                  "image": "file:///mypass/{}".format(url_for('static', filename='thumbnails/images/{}'.format(event.image))), 'numero_ticket': code}),
     rendered = render_template('post/ticket.html', datas=data)
-    # path_to_file = r'C:\Program Files\wkhtmltopdf\bin\wkhtmltopdf.exe'
-    config = pdfkit.configuration()
+    path_to_file = r'C:\Program Files\wkhtmltopdf\bin\wkhtmltopdf.exe'
+    config = pdfkit.configuration(wkhtmltopdf=path_to_file)
     pdf = pdfkit.from_string(rendered, False, configuration=config)
     response = make_response(pdf)
-    response.headers['Context-Type'] = 'Application/PDF'
+    response.headers['Content-Type'] = 'Application/PDF'
     response.headers['Content-Disposition'] = 'attachment;filename={}.pdf'.format(
         code)
+    print(response)
     return response
 
 
@@ -194,7 +194,7 @@ def editEvent(event_id):
             events = Events.query.order_by(Events.date_event.asc()).all()
             for event in events:
                 data.append({'id': event.id, "title": event.title, "date": event.date_event.strftime('%A, %d %B %Y'), "heure": event.time_event.strftime('%H:%M'), "lieu": event.place,
-                        "image": url_for('static', filename='thumbnails/images/{}'.format(event.image))}),
+                             "image": url_for('static', filename='thumbnails/images/{}'.format(event.image))}),
             return render_template('post/event.html', datas=data, button=button, title="Plus d'évènements")
         elif request.method == 'GET':
             form.title.data = event.title
@@ -437,8 +437,9 @@ def checker(event_id):
     data = []
     if form.is_submitted():
         tickets = Tickets.query.filter_by(
-            numero_ticket=int(form.numero.data),event=event_id).all()
+            numero_ticket=int(form.numero.data), event=event_id).all()
         for ticket in tickets:
-            data.append({'numero_ticket': ticket.numero_ticket,'event':ticket.event})
+            data.append(
+                {'numero_ticket': ticket.numero_ticket, 'event': ticket.event})
         return render_template('/post/result.html', tickets=data)
     return render_template('/post/ticketChecker.html', form=form)
